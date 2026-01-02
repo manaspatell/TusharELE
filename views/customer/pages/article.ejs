@@ -1,4 +1,13 @@
-<%- include('../partials/header', { title: article.title }) %>
+<%- include('../partials/header', {
+    title: article.title,
+    metaDescription: (article.excerpt || ('Read: ' + article.title + ' at Tushar Electronics.')),
+    canonical: 'https://tusharagro.com/article/' + article.slug,
+    ogTitle: article.title + ' — Tushar Electronics',
+    ogDescription: (article.excerpt || article.title),
+    ogImage: (article.image || '/logo/Logo1.png'),
+    ogUrl: 'https://tusharagro.com/article/' + article.slug,
+    ogType: 'article'
+}) %>
 
 <div class="container my-5">
     <nav aria-label="breadcrumb">
@@ -8,6 +17,35 @@
             <li class="breadcrumb-item active"><%= article.title %></li>
         </ol>
     </nav>
+
+        <!-- JSON-LD: Article + Breadcrumbs -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "<%= article.title.replace(/"/g, '\\"') %>",
+            "image": ["<%= (article.image || '/logo/Logo1.png') %>"],
+            "datePublished": "<%= new Date(article.created_at).toISOString() %>",
+            "author": {"@type": "Organization","name": "Tushar Electronics"},
+            "publisher": {"@type": "Organization","name": "Tushar Electronics","logo": {"@type": "ImageObject","url": "/logo/Logo1.png"}},
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://tusharagro.com/article/<%= article.slug %>"
+            },
+            "description": "<%= (article.excerpt || article.title).replace(/"/g, '\\"') %>"
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type":"ListItem","position":1,"name":"Home","item":"https://tusharagro.com/"},
+                {"@type":"ListItem","position":2,"name":"Blog","item":"https://tusharagro.com/blog"},
+                {"@type":"ListItem","position":3,"name":"<%= article.title.replace(/"/g, '\\"') %>","item":"https://tusharagro.com/article/<%= article.slug %>"}
+            ]
+        }
+        </script>
 
     <div class="row">
         <div class="col-md-8">
@@ -32,7 +70,11 @@
                     </small>
                 </div>
                 <div class="article-content">
-                    <%= article.content.replace(/\n/g, '<br>') %>
+                    <%- article.content
+                        // Normalize common line breaks and literal <br> text
+                        .replace(/\r\n|\r|\n/g, '<br>')
+                        .replace(/&lt;br\s*\/?&gt;/gi, '<br>')
+                    %>
                 </div>
                 <% if (article.tags && article.tags.length > 0) { %>
                     <div class="mt-4">

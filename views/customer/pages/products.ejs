@@ -1,97 +1,194 @@
-<%- include('../partials/header', { title: 'Products' }) %>
+<%- include('../partials/header', {
+    title: 'Products',
+    metaDescription: 'Browse all products available at Tushar Electronics. Bulk orders accepted.',
+    metaKeywords: (products && products.length > 0 ? products.map(p => p.name).join(', ') : 'products'),
+    canonical: 'https://tusharagro.com/products'
+}) %>
+        <!-- JSON-LD: Products Listing -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Products",
+            "description": "Browse all products available at Tushar Electronics. Bulk orders accepted.",
+            "url": "https://tusharagro.com/products",
+            "hasPart": [
+                <% if (products && products.length > 0) { %>
+                    <% products.forEach(function(product, idx) { %>
+                        {
+                            "@type": "Product",
+                            "name": "<%= product.name %>",
+                            "url": "https://tusharagro.com/product/<%= product.slug %>"
+                        }<%= idx < products.length - 1 ? ',' : '' %>
+                    <% }); %>
+                <% } %>
+            ]
+        }
+        </script>
 
-<div class="container my-5">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5>Filter by Category</h5>
-                </div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <a href="/products" class="list-group-item list-group-item-action <%= currentCategory === 'all' ? 'active' : '' %>">
-                            All Categories
+<div class="container my-5 products-page">
+    <aside class="sidebar">
+        <div class="card mb-4 category-filter-card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0 d-none d-md-block">Categories</h5>
+                <!-- Mobile accordion toggle -->
+                <button class="btn btn-link p-0 w-100 text-start category-toggle d-md-none" type="button" aria-expanded="false" aria-controls="mobileCategoryList">
+                    <span class="d-inline-flex align-items-center gap-2 fw-semibold">
+                        <i class="bi bi-list-ul category-label-icon"></i>
+                        Categories
+                    </span>
+                    <i class="bi bi-chevron-down ms-1 toggle-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="card-body categories-collapsible" id="mobileCategoryList" aria-hidden="true">
+                <% /* simple icon map - extend as needed */ %>
+                <% const iconMap = { electronics: 'bi-phone-fill', fashion: 'bi-bag-fill', books: 'bi-book', beauty: 'bi-heart-fill', home: 'bi-house-fill' }; %>
+                <div class="list-group category-list">
+                    <a href="/products" class="list-group-item list-group-item-action category-list-item <%= currentCategory === 'all' ? 'active' : '' %>" role="button">
+                        <span class="cat-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+                        <span class="cat-label">All Categories</span>
+                    </a>
+                    <% (categories || []).forEach(cat => { %>
+                        <% const icon = iconMap[cat.slug] || 'bi-tags'; %>
+                        <a href="/products?category=<%= cat.slug %>" class="list-group-item list-group-item-action category-list-item <%= currentCategory === cat.slug ? 'active' : '' %>" role="button">
+                            <span class="cat-icon"><i class="bi <%= icon %>"></i></span>
+                            <span class="cat-label"><%= cat.name %></span>
                         </a>
-                        <% categories.forEach(cat => { %>
-                            <a href="/products?category=<%= cat.slug %>" 
-                               class="list-group-item list-group-item-action <%= currentCategory === cat.slug ? 'active' : '' %>">
-                                <%= cat.name %>
-                            </a>
-                        <% }); %>
-                    </div>
+                    <% }); %>
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1>Products</h1>
-                <% if (search) { %>
-                    <p class="text-muted">Search results for: "<%= search %>"</p>
-                <% } %>
-            </div>
+    </aside>
 
-            <div class="row g-4">
-                <% if (products && products.length > 0) { %>
-                    <% products.forEach(product => { %>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="card product-card h-100 shadow-sm position-relative">
-                                <% if (product.discount && product.discount.enabled && product.discount.percentage > 0) { %>
-                                    <div class="discount-badge"><%= product.discount.percentage %>% OFF</div>
-                                <% } %>
-                                <a href="/product/<%= product.slug %>">
-                                    <img src="<%= product.images && product.images.length > 0 ? product.images[0] : 'data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Crect width=\"200\" height=\"200\" fill=\"%23ddd\"/%3E%3Ctext x=\"50%25\" y=\"50%25\" text-anchor=\"middle\" dy=\".3em\" fill=\"%23999\"%3ENo Image%3C/text%3E%3C/svg%3E' %>" 
-                                         class="card-img-top" style="height: 200px; object-fit: cover; background-color: #f0f0f0;" alt="<%= product.name %>"
-                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23ddd\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\'%3ENo Image%3C/text%3E%3C/svg%3E'; this.style.backgroundColor='#f0f0f0';">
-                                </a>
-                                <div class="card-body">
-                                    <h6 class="card-title">
-                                        <a href="/product/<%= product.slug %>" class="text-decoration-none text-dark">
-                                            <%= product.name %>
-                                        </a>
-                                    </h6>
-                                    <p class="text-muted small"><%= product.category_id ? product.category_id.name : '' %></p>
-                                    <div class="mb-2">
-                                        <% 
-                                        let finalPrice = product.price;
-                                        if (product.discount && product.discount.enabled && product.discount.percentage > 0) {
-                                            finalPrice = product.price * (1 - product.discount.percentage / 100);
-                                        %>
-                                            <span class="price-original">₹<%= product.price.toLocaleString() %></span>
-                                            <span class="price-discounted">₹<%= Math.round(finalPrice).toLocaleString() %></span>
-                                        <% } else { %>
-                                            <span class="price-discounted">₹<%= product.price.toLocaleString() %></span>
-                                        <% } %>
-                                    </div>
-                                    <button class="btn btn-inquiry btn-sm w-100" data-product-id="<%= product._id %>" data-product-name="<%= product.name %>" data-action="inquiry">
-                                        <i class="bi bi-envelope"></i> Send Inquiry
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                <% } else { %>
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No products found.</p>
-                    </div>
-                <% } %>
-            </div>
-
-            <% if (totalPages > 1) { %>
-                <nav class="mt-4">
-                    <ul class="pagination justify-content-center">
-                        <% for (let i = 1; i <= totalPages; i++) { %>
-                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-                                <a class="page-link" href="?page=<%= i %>&category=<%= currentCategory %>&search=<%= search || '' %>">
-                                    <%= i %>
-                                </a>
-                            </li>
-                        <% } %>
-                    </ul>
-                </nav>
+    <main class="main">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h4 mb-0">Products</h1>
+            <% if (search) { %>
+                <p class="text-muted">Search results for: "<%= search %>"</p>
             <% } %>
         </div>
-    </div>
+
+        <div class="products-wrapper grid-products">
+            <% if (products && products.length) { %>
+                <% products.forEach(product => { %>
+                    <article class="product-card card h-100 shadow-sm position-relative">
+                        <% if (product.discount && product.discount.enabled && product.discount.percentage > 0) { %>
+                            <div class="discount-badge"><%= product.discount.percentage %>% OFF</div>
+                        <% } %>
+
+                        <a href="/product/<%= product.slug %>" aria-label="View product details">
+                            <div class="product-image-container">
+                                <img src="<%= product.images && product.images.length ? product.images[0] : '/logo/Logo1.png' %>" alt="<%= product.name %>" onerror="this.src='/logo/Logo1.png'">
+                            </div>
+                        </a>
+
+                        <div class="card-body">
+                            <h4 class="mb-1"><a href="/product/<%= product.slug %>" class="text-decoration-none text-dark"><%= product.name %></a></h4>
+                            <p class="text-muted small mb-1"><%= product.category_id ? product.category_id.name : '' %></p>
+
+                            <div>
+                                <% let finalPrice = product.price;
+                                     if (product.discount && product.discount.enabled && product.discount.percentage > 0) {
+                                         finalPrice = product.price * (1 - product.discount.percentage / 100);
+                                %>
+                                    <span class="old-price">₹<%= product.price.toLocaleString() %></span>
+                                    <span class="new-price ms-2">₹<%= Math.round(finalPrice).toLocaleString() %></span>
+                                <% } else { %>
+                                    <span class="new-price">₹<%= product.price.toLocaleString() %></span>
+                                <% } %>
+                            </div>
+
+                            <div class="mt-3">
+                                <button class="btn btn-inquiry w-100" type="button" data-product-id="<%= product._id %>" data-product-name="<%= product.name %>" data-action="inquiry" aria-label="Send inquiry for <%= product.name %>"><i class="bi bi-envelope"></i> Send Inquiry</button>
+                            </div>
+                        </div>
+                    </article>
+                <% }); %>
+            <% } else { %>
+                <div class="text-center w-100"><p class="text-muted">No products found.</p></div>
+            <% } %>
+        </div>
+
+        <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+            <nav class="mt-4" aria-label="Products pagination">
+                <ul class="pagination justify-content-center">
+                    <% if (currentPage > 1) { %>
+                        <% const prevPage = currentPage - 1; %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= prevPage %>&category=<%= currentCategory %>&search=<%= search || '' %>">
+                                &laquo; Previous Page
+                            </a>
+                        </li>
+                    <% } %>
+                    <% if (currentPage < totalPages) { %>
+                        <% const nextPage = currentPage + 1; %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= nextPage %>&category=<%= currentCategory %>&search=<%= search || '' %>">
+                                Next Page &raquo;
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        <% } %>
+    </main>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.querySelector('.category-toggle');
+    const collapsible = document.querySelector('.categories-collapsible');
+    if (!(toggleBtn && collapsible)) return;
+
+    const mq = window.matchMedia('(max-width: 600px)');
+    const applyInitial = () => {
+        if (mq.matches) {
+            collapsible.classList.remove('open');
+            collapsible.setAttribute('aria-hidden','true');
+            toggleBtn.setAttribute('aria-expanded','false');
+        } else {
+            collapsible.classList.add('open');
+            collapsible.setAttribute('aria-hidden','false');
+            toggleBtn.setAttribute('aria-expanded','true');
+        }
+    };
+    applyInitial();
+    mq.addEventListener('change', applyInitial);
+
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = collapsible.classList.toggle('open');
+        collapsible.setAttribute('aria-hidden', !isOpen);
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+        const icon = toggleBtn.querySelector('.toggle-icon');
+        if (icon) icon.classList.toggle('rotated', isOpen);
+    });
+
+    // If user taps a category while list is collapsed, open it first (mobile UX)
+    document.addEventListener('click', (e) => {
+        const isCategoryItem = e.target.closest('.category-list-item');
+        if (isCategoryItem && window.matchMedia('(max-width: 600px)').matches) {
+            if (!collapsible.classList.contains('open')) {
+                e.preventDefault();
+                collapsible.classList.add('open');
+                collapsible.setAttribute('aria-hidden', 'false');
+                toggleBtn.setAttribute('aria-expanded', 'true');
+                const icon = toggleBtn.querySelector('.toggle-icon');
+                if (icon) icon.classList.add('rotated');
+            }
+        }
+    });
+});
+</script>
+
+<script>
+// show a brief loading shimmer for category list to feel polished
+document.addEventListener('DOMContentLoaded', function(){
+    const catList = document.querySelector('.list-group.category-list');
+    if (!catList) return;
+    catList.classList.add('loading');
+    setTimeout(()=> catList.classList.remove('loading'), 700);
+});
+</script>
 
 <!-- Inquiry Modal -->
 <div class="modal fade" id="inquiryModal" tabindex="-1">
@@ -114,8 +211,8 @@
                         <input type="tel" class="form-control" name="phone" required placeholder="Enter your number here">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Gmail Email *</label>
-                        <input type="email" class="form-control" name="email" required placeholder="yourname@gmail.com">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-control" name="email" required placeholder="you@example.com">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Product Name</label>
@@ -130,9 +227,7 @@
                         <textarea class="form-control" name="message" rows="4" placeholder="Any additional information..."></textarea>
                     </div>
                     <button type="submit" class="btn btn-inquiry w-100 mb-2">Send Inquiry</button>
-                    <a href="tel:+919171310766" class="btn btn-outline-primary w-100">
-                        <i class="bi bi-telephone-fill"></i> Call Directly: +91 9171310766
-                    </a>
+                    <a href="tel:+919171310766" class="btn btn-outline-primary w-100"><i class="bi bi-telephone-fill"></i> Call Directly: +91 9171310766</a>
                 </form>
             </div>
         </div>
@@ -148,50 +243,44 @@ window.sendProductInquiry = function(productId, productName) {
         const productNameInput = document.getElementById('inquiryProductName');
         const displayProductName = document.getElementById('displayProductName');
         const displayProductId = document.getElementById('displayProductId');
-        
+
         if (productIdInput) productIdInput.value = productId;
         if (productNameInput) productNameInput.value = productName || '';
         if (displayProductName) displayProductName.value = productName || 'Product';
         if (displayProductId) displayProductId.value = productId;
-        
+
         const modal = new bootstrap.Modal(inquiryModal);
         modal.show();
     }
 };
 
-// Handle inquiry buttons using event delegation (CSP compliant)
-document.addEventListener('DOMContentLoaded', function() {
-    document.addEventListener('click', function(e) {
-        const btn = e.target.closest('[data-action="inquiry"]');
-        if (btn) {
-            const productId = btn.getAttribute('data-product-id');
-            const productName = btn.getAttribute('data-product-name');
-            if (productId) {
-                sendProductInquiry(productId, productName);
-            }
-        }
-    });
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-action="inquiry"]');
+    if (btn) {
+        const productId = btn.getAttribute('data-product-id');
+        const productName = btn.getAttribute('data-product-name');
+        if (productId) sendProductInquiry(productId, productName);
+    }
 });
 
 document.getElementById('inquiryForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    
+
     if (data.product_ids) data.product_ids = [data.product_ids];
     if (data.product_name && !data.message) {
         data.message = `Inquiry for: ${data.product_name}`;
     } else if (data.product_name && data.message) {
         data.message = `Inquiry for: ${data.product_name}\n\n${data.message}`;
     }
-    
+
     try {
         const response = await fetch('/inquiry', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-        
         const result = await response.json();
         if (result.success) {
             alert('✅ Your inquiry has been received! We will contact you shortly.');
@@ -207,4 +296,36 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async (e) => 
 </script>
 
 <%- include('../partials/footer') %>
+
+<script>
+// Randomized, on-scroll animations for product cards
+document.addEventListener('DOMContentLoaded', function(){
+    const cards = document.querySelectorAll('.products-page .products-wrapper > .product-card');
+    if (!cards.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const variants = ['left','right','up','down','zoom','tilt'];
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                el.style.willChange = 'transform, opacity';
+                const idx = Number(el.dataset.seq) || 0;
+                const delaySec = ( (idx % 8) * 0.06 + Math.random() * 0.08 );
+                el.style.animationDelay = delaySec.toFixed(2) + 's';
+                el.classList.add('in');
+                el.addEventListener('animationend', () => { el.style.willChange = 'auto'; }, { once: true });
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+
+    cards.forEach((el, i) => {
+        const variant = variants[Math.floor(Math.random() * variants.length)];
+        el.classList.add('pp-anim');
+        el.dataset.anim = variant;
+        el.dataset.seq = i;
+        io.observe(el);
+    });
+});
+</script>
 

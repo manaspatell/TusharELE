@@ -1,0 +1,15 @@
+<%- include('partials/header', { title: '2FA Verify', baseUrl: baseUrl }) %>
+<div class="container mt-4">
+  <h3>Two-Factor Authentication Verification</h3>
+  <% if (error) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+  <form action="<%= baseUrl %>/2fa/verify" method="post">
+    <div class="mb-3">
+      <label for="token" class="form-label">Verification code</label>
+      <input id="token" name="token" class="form-control" placeholder="123456" autocomplete="one-time-code">
+    </div>
+    <button class="btn btn-primary">Verify</button>
+  </form>
+</div>
+<%- include('partials/footer') %>

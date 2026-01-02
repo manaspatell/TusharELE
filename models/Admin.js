@@ -5,22 +5,21 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
     default: 'admin',
-    enum: ['admin', 'super_admin']
+    enum: ['admin', 'super_admin'],
   },
   created_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Admin', adminSchema);
-

@@ -51,6 +51,7 @@ ADMIN_PASSWORD=admin123
 ### 4. Start MongoDB
 
 **Local MongoDB:**
+
 ```bash
 # Windows
 mongod
@@ -62,6 +63,7 @@ brew services start mongodb-community
 ```
 
 **MongoDB Atlas (Cloud):**
+
 - Create a free cluster at https://www.mongodb.com/cloud/atlas
 - Get your connection string
 - Update `MONGODB_URI` in `.env`
@@ -75,6 +77,7 @@ npm run seed
 ```
 
 **Default Admin Login:**
+
 - Username: `admin`
 - Password: `admin123`
 
@@ -83,11 +86,13 @@ npm run seed
 ### 6. Start the Server
 
 **Development (with auto-reload):**
+
 ```bash
 npm run dev
 ```
 
 **Production:**
+
 ```bash
 npm start
 ```
@@ -125,21 +130,25 @@ npm start
 ## Troubleshooting
 
 ### MongoDB Connection Error
+
 - Ensure MongoDB is running
 - Check your connection string in `.env`
 - Verify network/firewall settings
 
 ### Email Not Sending
+
 - Verify Gmail App Password is correct
 - Check 2-Step Verification is enabled
 - Ensure `EMAIL_PASS` in `.env` is the 16-character app password (not your regular password)
 
 ### Images Not Uploading
+
 - Check `public/uploads/` directories exist
 - Verify file permissions
 - Check file size (max 5MB)
 
 ### Admin Login Not Working
+
 - Run `npm run seed` again to recreate admin
 - Check MongoDB connection
 - Verify session configuration
@@ -160,4 +169,3 @@ npm start
 ## Support
 
 For issues or questions, contact: **tusharelectronics8439@gmail.com**
-

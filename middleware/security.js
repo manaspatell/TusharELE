@@ -5,17 +5,31 @@ const helmet = require('helmet');
 const securityHeaders = helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
-      styleSrcElem: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-      scriptSrcAttr: ["'unsafe-inline'"], // Allow inline event handlers
-      imgSrc: ["'self'", "data:", "https:"],
-      fontSrc: ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com"],
-      connectSrc: ["'self'", "https://cdn.jsdelivr.net"]
-    }
+      defaultSrc: ['\'self\''],
+      styleSrc: [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        'https://cdn.jsdelivr.net',
+        'https://fonts.googleapis.com',
+      ],
+      styleSrcElem: [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        'https://cdn.jsdelivr.net',
+        'https://fonts.googleapis.com',
+      ],
+      scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'https://cdn.jsdelivr.net'],
+      scriptSrcAttr: ['\'unsafe-inline\''], // Allow inline event handlers
+      imgSrc: ['\'self\'', 'data:', 'https:'],
+      fontSrc: [
+        '\'self\'',
+        'https://cdn.jsdelivr.net',
+        'https://fonts.gstatic.com',
+      ],
+      connectSrc: ['\'self\'', 'https://cdn.jsdelivr.net'],
+    },
   },
-  crossOriginEmbedderPolicy: false
+  crossOriginEmbedderPolicy: false,
 });
 
 // Rate limiting for login
@@ -25,7 +39,7 @@ const loginLimiter = rateLimit({
   message: 'Too many login attempts, please try again after 15 minutes.',
   standardHeaders: true,
   legacyHeaders: false,
-  skipSuccessfulRequests: true
+  skipSuccessfulRequests: true,
 });
 
 // Rate limiting for API endpoints
@@ -34,7 +48,7 @@ const apiLimiter = rateLimit({
   max: 100, // 100 requests per window
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
 // Rate limiting for inquiry submissions
@@ -43,7 +57,7 @@ const inquiryLimiter = rateLimit({
   max: 10, // 10 inquiries per hour
   message: 'Too many inquiries submitted, please try again later.',
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
 // Rate limiting for newsletter
@@ -52,7 +66,7 @@ const newsletterLimiter = rateLimit({
   max: 5, // 5 subscriptions per hour
   message: 'Too many newsletter subscriptions, please try again later.',
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
 module.exports = {
@@ -60,6 +74,5 @@ module.exports = {
   loginLimiter,
   apiLimiter,
   inquiryLimiter,
-  newsletterLimiter
+  newsletterLimiter,
 };
-

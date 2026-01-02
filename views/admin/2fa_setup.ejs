@@ -1,0 +1,26 @@
+<%- include('partials/header', { title: '2FA Setup', baseUrl: baseUrl }) %>
+<div class="container mt-4">
+  <h3>Two-Factor Authentication Setup</h3>
+  <% if (error) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+  <% if (qrDataUrl) { %>
+    <p>Scan the QR code below with Google Authenticator (or another TOTP app), then enter the code to enable 2FA.</p>
+    <div class="mb-3">
+      <img src="<%= qrDataUrl %>" alt="QR Code">
+    </div>
+    <p>Your secret (backup): <code><%= secretBase32 %></code></p>
+    <form action="<%= baseUrl %>/2fa/enable" method="post" class="mb-3">
+      <input type="hidden" name="secret" value="<%= secretBase32 %>">
+      <div class="mb-3">
+        <label for="token" class="form-label">Verification code</label>
+        <input id="token" name="token" class="form-control" placeholder="123456" autocomplete="one-time-code">
+      </div>
+      <button class="btn btn-primary">Enable 2FA</button>
+    </form>
+  <% } else { %>
+    <p>If you want to enable 2FA, click the button below to generate setup details.</p>
+    <a class="btn btn-secondary" href="<%= baseUrl %>/2fa/setup">Generate Setup</a>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

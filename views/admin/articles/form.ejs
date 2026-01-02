@@ -10,7 +10,7 @@
         <div class="alert alert-danger"><%= error %></div>
     <% } %>
 
-    <form method="POST" action="<%= article ? '/admin/articles/edit/' + article._id : '/admin/articles/create' %>" 
+    <form method="POST" action="<%= article ? baseUrl + '/articles/edit/' + article._id : baseUrl + '/articles/create' %>" 
           enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-8">
@@ -76,7 +76,7 @@
             <button type="submit" class="btn btn-primary">
                 <i class="bi bi-save"></i> <%= article ? 'Update' : 'Create' %> Article
             </button>
-            <a href="/admin/articles" class="btn btn-secondary">Cancel</a>
+            <a href="<%= baseUrl %>/articles" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>

@@ -4,32 +4,31 @@ const testimonialSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   feedback: {
     type: String,
-    required: true
+    required: true,
   },
   rating: {
     type: Number,
     required: true,
     min: 1,
-    max: 5
+    max: 5,
   },
   image: {
     type: String,
-    default: ''
+    default: '',
   },
   status: {
     type: String,
     enum: ['active', 'inactive'],
-    default: 'active'
+    default: 'active',
   },
   created_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Testimonial', testimonialSchema);
-

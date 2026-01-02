@@ -7,7 +7,10 @@ const inquiryController = require('../controllers/inquiryController');
 const articleController = require('../controllers/articleController');
 
 // Validation middleware
-const { validateInquiry, validateNewsletter } = require('../middleware/validation');
+const {
+  validateInquiry,
+  validateNewsletter,
+} = require('../middleware/validation');
 
 // Homepage
 router.get('/', customerController.home);
@@ -26,6 +29,8 @@ router.get('/article/:slug', articleController.view);
 // Inquiry
 router.post('/inquiry', validateInquiry, inquiryController.create);
 
+// Saved-items routes were removed
+
 // Newsletter
 router.post('/newsletter', validateNewsletter, customerController.newsletter);
 
@@ -33,17 +38,27 @@ router.post('/newsletter', validateNewsletter, customerController.newsletter);
 router.get('/about', customerController.about);
 router.get('/contact', customerController.contact);
 router.get('/faq', customerController.faq);
+// Privacy Policy and Terms of Service (static EJS pages)
+router.get('/privacy', (req, res) => {
+  res.render('customer/pages/privacy');
+});
+router.get('/terms', (req, res) => {
+  res.render('customer/pages/terms');
+});
 router.get('/privacy-policy', customerController.privacy);
 router.get('/terms-conditions', customerController.terms);
 router.get('/shipping-policy', customerController.shipping);
 router.get('/return-refund-policy', customerController.returns);
+// Alias to avoid 404 for legacy link
+router.get('/refund-policy', customerController.returns);
+// Warranty page
+router.get('/warranty', customerController.warranty);
 
 // SEO - Sitemap and Robots
 router.get('/sitemap.xml', customerController.sitemap);
 router.get('/robots.txt', (req, res) => {
-    res.type('text/plain');
-    res.sendFile(require('path').join(__dirname, '../public/robots.txt'));
+  res.type('text/plain');
+  res.sendFile(require('path').join(__dirname, '../public/robots.txt'));
 });
 
 module.exports = router;
-

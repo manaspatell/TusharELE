@@ -1,12 +1,22 @@
 <%- include('../partials/header', { title: 'FAQ' }) %>
 
-<div class="container my-5">
-    <h1 class="mb-4">Frequently Asked Questions</h1>
-    <div class="accordion" id="faqAccordion">
-        <div class="accordion-item">
+<div class="container py-5">
+    <div class="text-center mb-5 fade-in-up">
+        <div class="icon-badge primary mb-3"><i class="bi bi-question-circle"></i></div>
+        <h1 class="display-6 fw-semibold">Frequently Asked Questions</h1>
+        <p class="lead text-muted mb-0">Quick answers to common questions about orders, delivery and support.</p>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+        <div class="col-12 fade-in-up" style="animation-delay:.05s;">
+            <div class="h-100 shadow-sm premium-card glass">
+                <div class="card-inner">
+                    <div class="accordion" id="faqAccordion">
+        <div class="accordion-item fade-in-up" style="animation-delay:.05s;">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                    How do I place an order?
+                    <span class="detail-icon me-2" style="color:#0ea5a4;"><i class="bi bi-cart-check"></i></span>
+                    <span>How do I place an order?</span>
                 </button>
             </h2>
             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
@@ -15,10 +25,11 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item fade-in-up" style="animation-delay:.1s;">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                    What payment methods do you accept?
+                    <span class="detail-icon me-2" style="color:#ef4444;"><i class="bi bi-credit-card"></i></span>
+                    <span>What payment methods do you accept?</span>
                 </button>
             </h2>
             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
@@ -27,10 +38,11 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item fade-in-up" style="animation-delay:.15s;">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                    Do you offer delivery?
+                    <span class="detail-icon me-2" style="color:#10b981;"><i class="bi bi-truck"></i></span>
+                    <span>Do you offer delivery?</span>
                 </button>
             </h2>
             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
@@ -39,10 +51,11 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item fade-in-up" style="animation-delay:.2s;">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                    What is your return policy?
+                    <span class="detail-icon me-2" style="color:#f59e0b;"><i class="bi bi-arrow-repeat"></i></span>
+                    <span>What is your return policy?</span>
                 </button>
             </h2>
             <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
@@ -51,15 +64,20 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item fade-in-up" style="animation-delay:.25s;">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                    How can I track my order?
+                    <span class="detail-icon me-2" style="color:#6366f1;"><i class="bi bi-clipboard-check"></i></span>
+                    <span>How can I track my order?</span>
                 </button>
             </h2>
             <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body">
                     Once your order is confirmed, we will provide you with tracking information via email.
+                </div>
+            </div>
+        </div>
+                    </div>
                 </div>
             </div>
         </div>

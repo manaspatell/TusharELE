@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-box"></i> Products</h5>
                     <h2><%= totalProducts || 0 %></h2>
-                    <a href="/admin/products" class="text-white text-decoration-none">View All →</a>
+                    <a href="<%= baseUrl %>/products" class="text-white text-decoration-none">View All →</a>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-tags"></i> Categories</h5>
                     <h2><%= totalCategories || 0 %></h2>
-                    <a href="/admin/categories" class="text-white text-decoration-none">View All →</a>
+                    <a href="<%= baseUrl %>/categories" class="text-white text-decoration-none">View All →</a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     <h5 class="card-title"><i class="bi bi-envelope"></i> Inquiries</h5>
                     <h2><%= totalInquiries || 0 %></h2>
                     <small>New: <%= newInquiries || 0 %></small><br>
-                    <a href="/admin/inquiries" class="text-white text-decoration-none">View All →</a>
+                    <a href="<%= baseUrl %>/inquiries" class="text-white text-decoration-none">View All →</a>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-file-text"></i> Articles</h5>
                     <h2><%= totalArticles || 0 %></h2>
-                    <a href="/admin/articles" class="text-white text-decoration-none">View All →</a>
+                    <a href="<%= baseUrl %>/articles" class="text-white text-decoration-none">View All →</a>
                 </div>
             </div>
         </div>
@@ -52,16 +52,16 @@
                     <h5><i class="bi bi-lightning"></i> Quick Actions</h5>
                 </div>
                 <div class="card-body">
-                    <a href="/admin/products/create" class="btn btn-primary me-2">
+                    <a href="<%= baseUrl %>/products/create" class="btn btn-primary me-2">
                         <i class="bi bi-plus-circle"></i> Add Product
                     </a>
-                    <a href="/admin/categories/create" class="btn btn-success me-2">
+                    <a href="<%= baseUrl %>/categories/create" class="btn btn-success me-2">
                         <i class="bi bi-plus-circle"></i> Add Category
                     </a>
-                    <a href="/admin/articles/create" class="btn btn-info me-2">
+                    <a href="<%= baseUrl %>/articles/create" class="btn btn-info me-2">
                         <i class="bi bi-plus-circle"></i> Add Article
                     </a>
-                    <a href="/admin/banners/create" class="btn btn-warning">
+                    <a href="<%= baseUrl %>/banners/create" class="btn btn-warning">
                         <i class="bi bi-plus-circle"></i> Add Banner
                     </a>
                 </div>
@@ -101,7 +101,7 @@
                                             </td>
                                             <td><%= new Date(inquiry.created_at).toLocaleDateString() %></td>
                                             <td>
-                                                <a href="/admin/inquiries/view/<%= inquiry._id %>" class="btn btn-sm btn-primary">
+                                                <a href="<%= baseUrl %>/inquiries/view/<%= inquiry._id %>" class="btn btn-sm btn-primary">
                                                     View
                                                 </a>
                                             </td>

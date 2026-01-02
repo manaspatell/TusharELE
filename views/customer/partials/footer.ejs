@@ -1,287 +1,207 @@
-    <!-- Footer -->
-    <footer class="bg-dark text-white mt-5">
-        <div class="container py-5">
-            <!-- Trust Indicators -->
-            <div class="row mb-4 pb-4 border-bottom border-secondary">
-                <div class="col-md-12 text-center">
-                    <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <div class="security-indicator">
-                            <i class="bi bi-shield-lock-fill" style="color: #28a745;"></i>
-                            <span>Secure & Safe</span>
-                        </div>
-                        <div class="security-indicator">
-                            <i class="bi bi-award-fill" style="color: #ffc107;"></i>
-                            <span>Quality Guaranteed</span>
-                        </div>
-                        <div class="security-indicator">
-                            <i class="bi bi-people-fill" style="color: #17a2b8;"></i>
-                            <span>Trusted by Thousands</span>
-                        </div>
-                        <div class="security-indicator">
-                            <i class="bi bi-star-fill" style="color: #ffd700;"></i>
-                            <span>5-Star Service</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5><i class="bi bi-lightning-charge-fill" style="color: #F7A400;"></i> Tushar Electronics</h5>
-                    <p>Your trusted source for quality electronics. We offer the best in TVs, ACs, Washing Machines, and more.</p>
-                    <div class="mt-3">
-                        <p class="mb-2 phone-number text-white">
-                            <i class="bi bi-telephone-fill"></i> 
-                            <a href="tel:+919171310766" class="text-white text-decoration-none">+91 9171310766</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="bi bi-envelope"></i> 
-                            <a href="mailto:tusharelectronics8439@gmail.com" class="text-white-50 text-decoration-none">tusharelectronics8439@gmail.com</a>
-                        </p>
-                    </div>
-                    <div class="mt-3">
-                        <p class="mb-2"><strong>Why Choose Us?</strong></p>
-                        <ul class="list-unstyled">
-                            <li><i class="bi bi-check-circle text-success me-2"></i> Authentic Products</li>
-                            <li><i class="bi bi-check-circle text-success me-2"></i> Best Prices</li>
-                            <li><i class="bi bi-check-circle text-success me-2"></i> Expert Support</li>
-                            <li><i class="bi bi-check-circle text-success me-2"></i> Fast Delivery</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h6>Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="/about" class="text-white-50 text-decoration-none">About Us</a></li>
-                        <li><a href="/contact" class="text-white-50 text-decoration-none">Contact</a></li>
-                        <li><a href="/faq" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li><a href="/blog" class="text-white-50 text-decoration-none">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h6>Policies</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="/privacy-policy" class="text-white-50 text-decoration-none">Privacy Policy</a></li>
-                        <li><a href="/terms-conditions" class="text-white-50 text-decoration-none">Terms & Conditions</a></li>
-                        <li><a href="/shipping-policy" class="text-white-50 text-decoration-none">Shipping Policy</a></li>
-                        <li><a href="/return-refund-policy" class="text-white-50 text-decoration-none">Return Policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h6>Newsletter</h6>
-                    <p class="text-white-50">Subscribe to get updates on new products and offers.</p>
-                    <form id="newsletterForm" class="d-flex">
-                        <input type="email" class="form-control form-control-sm" placeholder="Your email" required>
-                        <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-            <hr class="bg-white">
-            <div class="text-center">
-                <p class="mb-0">&copy; <%= new Date().getFullYear() %> Tushar Electronics. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<!-- ===== Redesigned Footer (semantic & responsive) ===== -->
+<footer class="site-footer premium-footer footer-modern" role="contentinfo" aria-label="Site footer">
+  <!-- Three.js footer background canvas -->
+  <div id="footer-bg" aria-hidden="true" style="position:absolute; inset:0; z-index:0; pointer-events:none;"></div>
+  <div class="premium-footer-inner">
+    <div class="footer-grid footer-top">
+      <!-- Column 1: About -->
+      <div class="footer-col footer-about">
+        <a class="brand" href="/" aria-label="Tushar Electronics homepage">Tushar Electronics</a>
+        <p class="muted">Trusted electronics retailer with local support, warranty & dedicated customer care.</p>
+        <address class="footer-address">
+          <strong>Address</strong><br />
+          Based in Indore, Madhya Pradesh<br />
+          <a href="tel:+919171310766" class="footer-link" aria-label="Call customer care">+91 9171310766</a><br />
+          <a href="mailto:tusharelectronics8439@gmail.com" class="footer-link">tusharelectronics8439@gmail.com</a>
+        </address>
+      </div>
 
-    <!-- Floating Call Button -->
-    <a href="tel:+919171310766" class="call-float" title="Call Now">
-        <i class="bi bi-telephone-fill"></i>
-    </a>
+      <!-- Column 2: Shop -->
+      <nav class="footer-col footer-shop" aria-label="Shop links">
+        <h4 class="footer-heading">Shop</h4>
+        <ul class="footer-list">
+          <li><a class="footer-link" href="/products">All Products</a></li>
+          <li><a class="footer-link" href="/products?filter=bestsellers">Best Sellers</a></li>
+          <li><a class="footer-link" href="/products?filter=featured">Featured</a></li>
+          <li><a class="footer-link" href="/products?filter=new">New Arrivals</a></li>
+        </ul>
+      </nav>
 
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/919171310766" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
+      <!-- Column 3: Customer Support -->
+      <div class="footer-col footer-support" aria-label="Customer support">
+        <h4 class="footer-heading">Customer Support</h4>
+        <ul class="footer-list">
+          <li><a class="footer-link" href="/contact">Contact Us</a></li>
+          <li><a class="footer-link" href="/faq">FAQ</a></li>
+          <li><a class="footer-link" href="/return-refund-policy">Returns & Refunds</a></li>
+          <li><a class="footer-link" href="/shipping-policy">Shipping Info</a></li>
+          <li><a class="footer-link" href="/privacy">Privacy Policy</a></li>
+          <li><a class="footer-link" href="/terms">Terms of Service</a></li>
+        </ul>
+      </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/main.js"></script>
-    <script>
-    // Search Suggestions Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        const suggestionsDiv = document.getElementById('searchSuggestions');
-        let currentFocus = -1;
-        let suggestionsData = { categories: [], products: [] };
-        let debounceTimer;
+      <!-- Column 4: Legal -->
+      <div class="footer-col footer-legal" aria-label="Legal links">
+        <h4 class="footer-heading">Legal</h4>
+        <ul class="footer-list">
+          <li><a class="footer-link" href="/privacy-policy">Privacy Policy</a></li>
+          <li><a class="footer-link" href="/terms-conditions">Terms & Conditions</a></li>
+          <li><a class="footer-link" href="/warranty">Warranty</a></li>
+          <li><a class="footer-link" href="/return-refund-policy">Returns & Refunds</a></li>
+        </ul>
+      </div>
 
-        if (!searchInput || !suggestionsDiv) {
-            console.log('Search elements not found');
-            return;
-        }
+      <!-- Column 5: Newsletter + Social -->
+      <div class="footer-col footer-newsletter" aria-label="Newsletter signup">
+        <h4 class="footer-heading">Newsletter</h4>
+        <p class="muted small">Get monthly deals, new arrivals & tips — no spam.</p>
 
-        // Fetch suggestions from API
-        async function fetchSuggestions(query) {
-            if (query.length < 2) {
-                suggestionsDiv.classList.remove('show');
-                return;
-            }
-
+        <form id="footerNewsletterForm" class="footer-newsletter-form" action="/newsletter" method="POST" novalidate>
+          <label for="footerEmail" class="visually-hidden">Email address</label>
+          <div class="newsletter-row">
+            <input id="footerEmail" name="email" type="email" placeholder="you@example.com" required class="newsletter-input" />
+            <button type="submit" class="btn newsletter-btn" aria-label="Subscribe to newsletter">Subscribe</button>
+          </div>
+        </form>
+        <div id="newsletterSuccess" style="display:none; color:green; margin-top:8px; font-weight:500;">Successfully subscribed to newsletter!</div>
+        <script>
+          document.getElementById('footerNewsletterForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.email.value;
+            const btn = form.querySelector('button');
+            btn.disabled = true;
             try {
-                const response = await fetch(`/api/search-suggestions?q=${encodeURIComponent(query)}`);
-                const data = await response.json();
-                suggestionsData = data;
-                displaySuggestions(data);
-            } catch (error) {
-                console.error('Error fetching suggestions:', error);
-                suggestionsDiv.classList.remove('show');
+              const res = await fetch('/newsletter', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+              });
+              const data = await res.json();
+              if (data.success) {
+                document.getElementById('newsletterSuccess').style.display = 'block';
+                form.reset();
+              } else {
+                alert(data.message || 'Subscription failed.');
+              }
+            } catch {
+              alert('Network error. Please try again.');
             }
-        }
+            btn.disabled = false;
+          });
+        </script>
 
-        // Display suggestions
-        function displaySuggestions(data) {
-            if ((!data.categories || data.categories.length === 0) && 
-                (!data.products || data.products.length === 0)) {
-                suggestionsDiv.classList.remove('show');
-                return;
-            }
+        <div class="footer-social" aria-hidden="false">
+          <a class="social-link" href="#" aria-label="Facebook - Tushar Electronics"><i class="bi bi-facebook"></i></a>
+          <a class="social-link" href="#" aria-label="Instagram - Tushar Electronics"><i class="bi bi-instagram"></i></a>
+          <a class="social-link" href="#" aria-label="YouTube - Tushar Electronics"><i class="bi bi-youtube"></i></a>
+          <a class="social-link" href="#" aria-label="Twitter - Tushar Electronics"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
 
-            let html = '';
+    <!-- Divider -->
+    <div class="footer-divider" role="presentation" aria-hidden="true"></div>
 
-            // Categories section
-            if (data.categories && data.categories.length > 0) {
-                html += '<div class="suggestion-section"><i class="bi bi-grid-3x3-gap-fill me-2" style="color: #4A90E2;"></i>Categories</div>';
-                data.categories.forEach(category => {
-                    html += `
-                        <div class="suggestion-item" data-type="category" data-url="/category/${category.slug}">
-                            <i class="bi bi-tag-fill suggestion-icon" style="color: #F7A400;"></i>
-                            <div class="suggestion-content">
-                                <div class="suggestion-title">${escapeHtml(category.name)}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
+    <!-- Bottom: Badges and copyright -->
+    <div class="footer-bottom">
+      <div class="badges" aria-hidden="false">
+        <div class="badge badge-icon badge-secure" role="img" aria-label="Secure Checkout" title="Secure Checkout">
+          <i class="bi bi-shield-check" aria-hidden="true"></i>
+        </div>
+        <div class="badge badge-icon badge-visa" role="img" aria-label="Credit card payments accepted" title="Cards accepted">
+          <i class="bi bi-credit-card" aria-hidden="true"></i>
+        </div>
+        <div class="badge badge-icon badge-merchant" role="img" aria-label="Trusted merchant" title="Trusted merchant">
+          <i class="bi bi-award" aria-hidden="true"></i>
+        </div>
+        <div class="badge badge-icon badge-razorpay" role="img" aria-label="UPI and Netbanking" title="UPI and Netbanking">
+          <i class="bi bi-bank" aria-hidden="true"></i>
+        </div>
+      </div>
 
-            // Products section
-            if (data.products && data.products.length > 0) {
-                html += '<div class="suggestion-section"><i class="bi bi-box-seam-fill me-2" style="color: #E74C3C;"></i>Products</div>';
-                data.products.forEach(product => {
-                    const price = product.price ? `₹${product.price.toLocaleString()}` : '';
-                    const categoryName = product.category_id ? product.category_id.name : '';
-                    html += `
-                        <div class="suggestion-item" data-type="product" data-url="/product/${product.slug}">
-                            <i class="bi bi-box-seam suggestion-icon" style="color: #28a745;"></i>
-                            <div class="suggestion-content">
-                                <div class="suggestion-title">${escapeHtml(product.name)}</div>
-                                <div class="suggestion-subtitle">
-                                    ${categoryName ? `<span class="suggestion-category">${escapeHtml(categoryName)}</span> ` : ''}${price}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            suggestionsDiv.innerHTML = html;
-            suggestionsDiv.classList.add('show');
-            currentFocus = -1;
-
-            // Add click handlers
-            const items = suggestionsDiv.querySelectorAll('.suggestion-item');
-            items.forEach((item, index) => {
-                item.addEventListener('click', function() {
-                    const url = this.getAttribute('data-url');
-                    if (url) {
-                        window.location.href = url;
-                    }
-                });
-
-                item.addEventListener('mouseenter', function() {
-                    items.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFocus = index;
-                });
-            });
-        }
-
-        // Escape HTML to prevent XSS
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Handle input
-        searchInput.addEventListener('input', function(e) {
-            const query = e.target.value.trim();
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
-        });
-
-        // Handle keyboard navigation
-        searchInput.addEventListener('keydown', function(e) {
-            const items = suggestionsDiv.querySelectorAll('.suggestion-item');
-            
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                currentFocus++;
-                if (currentFocus >= items.length) currentFocus = 0;
-                updateActiveItem(items);
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                currentFocus--;
-                if (currentFocus < 0) currentFocus = items.length - 1;
-                updateActiveItem(items);
-            } else if (e.key === 'Enter') {
-                e.preventDefault();
-                if (currentFocus >= 0 && items[currentFocus]) {
-                    const url = items[currentFocus].getAttribute('data-url');
-                    if (url) {
-                        window.location.href = url;
-                    }
-                } else {
-                    searchInput.form.submit();
-                }
-            } else if (e.key === 'Escape') {
-                suggestionsDiv.classList.remove('show');
-                currentFocus = -1;
-            }
-        });
-
-        function updateActiveItem(items) {
-            items.forEach(item => item.classList.remove('active'));
-            if (items[currentFocus]) {
-                items[currentFocus].classList.add('active');
-                items[currentFocus].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-            }
-        }
-
-        // Close suggestions when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-                suggestionsDiv.classList.remove('show');
-            }
-        });
-    });
-    </script>
-    <script>
-    // Final carousel initialization check - ensure it's working
-    if (typeof bootstrap !== 'undefined' && bootstrap.Carousel) {
-        const carouselElement = document.querySelector('#heroCarousel');
-        if (carouselElement) {
-            const items = carouselElement.querySelectorAll('.carousel-item');
-            if (items.length > 0) {
-                let carousel = bootstrap.Carousel.getInstance(carouselElement);
-                if (!carousel) {
-                    try {
-                        carousel = new bootstrap.Carousel(carouselElement, {
-                            interval: 2000,
-                            ride: false,
-                            wrap: true,
-                            pause: 'hover',
-                            keyboard: true
-                        });
-                        carousel.cycle();
-                    } catch (error) {
-                        console.error('Error initializing carousel in footer:', error);
-                    }
-                } else if (!carousel._interval) {
-                    carousel.cycle();
-                }
-            }
-        }
+      <div class="copyright muted small">
+        &copy; <%= new Date().getFullYear() %> Tushar Electronics. All rights reserved. Designed with care.
+      </div>
+    </div>
+  </div>
+  <!-- Cookie Consent Banner -->
+  <div id="cookieConsent" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#222; color:#fff; padding:16px; z-index:9999; text-align:center; font-size:1rem;">
+    This website uses cookies to ensure you get the best experience. 
+    <a href="/privacy" style="color:#ffd700; text-decoration:underline;">Learn more</a>.
+    <button id="acceptCookies" style="margin-left:16px; background:#ffd700; color:#222; border:none; padding:6px 16px; border-radius:4px; cursor:pointer;">Accept</button>
+  </div>
+  <script>
+    // Simple cookie consent logic
+    if (!localStorage.getItem('cookieConsent')) {
+      document.getElementById('cookieConsent').style.display = 'block';
+      document.getElementById('acceptCookies').onclick = function() {
+        localStorage.setItem('cookieConsent', 'true');
+        document.getElementById('cookieConsent').style.display = 'none';
+      };
     }
-    </script>
+  </script>
+</footer>
+
+<!-- Customer Care Floating Widget (preserved) -->
+<style>
+.customer-care-widget { position: fixed; right: 18px; bottom: 18px; z-index: 1080; display: flex; align-items: center; gap: 10px; transform: translateY(0); transition: transform 0.28s ease, opacity 0.28s ease; opacity: 1; pointer-events: auto; will-change: transform, opacity; }
+.customer-care-widget.show { opacity: 1; transform: translateY(0); }
+.customer-care-widget .cc-link { display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0ea5a4 0%, #06b6d4 100%); color: #fff; padding: 12px 14px; border-radius: 999px; box-shadow: 0 12px 34px rgba(3,105,120,0.32); text-decoration: none; min-width: 170px; align-self: flex-end; transform-origin: center; border: 2px solid rgba(255,255,255,0.85); }
+.customer-care-widget .cc-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.22); flex: 0 0 44px; font-size: 1.15rem; position: relative; overflow: visible; }
+.customer-care-widget .cc-text { line-height: 1; display:flex;flex-direction:column; }
+.customer-care-widget .cc-text strong { font-size: 13px; font-weight:700; display:block; }
+.customer-care-widget .cc-text small { font-size: 11px; opacity:0.95; }
+@keyframes cc-float { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
+.customer-care-widget .cc-link { animation: cc-float 3.8s ease-in-out infinite; }
+.customer-care-widget .cc-icon::after { content: ""; position: absolute; width: 44px; height: 44px; border-radius: 50%; left: 0; top: 0; transform: translate(-2px, -2px); box-shadow: 0 0 0 0 rgba(14,165,164,0.25); animation: cc-pulse 2.6s infinite; pointer-events: none; }
+@keyframes cc-pulse { 0% { box-shadow: 0 0 0 0 rgba(14,165,164,0.30); } 70% { box-shadow: 0 0 0 12px rgba(14,165,164,0); } 100% { box-shadow: 0 0 0 0 rgba(14,165,164,0); } }
+@media (max-width: 420px) { .customer-care-widget { right: 12px; bottom: 12px; } .customer-care-widget .cc-link { min-width: 140px; padding: 10px 12px; } .customer-care-widget .cc-icon { width: 38px; height: 38px; flex: 0 0 38px; } }
+</style>
+
+<div id="customerCareWidget" class="customer-care-widget" aria-hidden="true">
+    <a id="customerCareLink" class="cc-link" href="tel:+919171310766" aria-label="Call Customer Care">
+        <span class="cc-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><defs><radialGradient id="g1" cx="30%" cy="20%" r="100%"><stop offset="0%" stop-color="#26a0da" /><stop offset="100%" stop-color="#0b84d8" /></radialGradient></defs><circle cx="24" cy="24" r="22" fill="url(#g1)" /><circle cx="24" cy="24" r="21" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2" /><circle cx="24" cy="18" r="5.2" fill="#fff" opacity="0.95" /><path d="M20.2 17.2c0-1.9 1.8-3.5 3.8-3.5s3.8 1.6 3.8 3.5c0 .6-.3 1.1-.7 1.5-.6.7-2.9 1-3.1.9-.2-.2-2.6-.3-3.8-.9-.5-.2-.9-.7-.9-1.5z" fill="#0b84d8" opacity="0.98" /><path d="M16 27c0-3.2 3.6-5.2 8-5.2s8 2 8 5.2v1.8c0 .8-.6 1.4-1.4 1.4h-2.6c-.5 0-.9-.4-.9-.9v-3.0c0-.5-.4-1-1-1h-6c-.6 0-1 .5-1 1v3.0c0 .5-.4.9-.9.9H17.4C16.6 30.2 16 29.6 16 28.8V27z" fill="#fff" opacity="0.95" /><path d="M9.5 22.5c0-7.4 6.6-13.4 14.5-13.4S38.5 15.1 38.5 22.5v1.2c0 .8-.6 1.4-1.4 1.4h-1.4c-.5 0-.9-.4-.9-.9v-2.2c0-.7-.6-1.3-1.3-1.3h-3.2c-.7 0-1.3.6-1.3 1.3v2.2c0 .5-.4.9-.9.9h-2.6c-.5 0-.9-.4-.9-.9v-2.2c0-.7-.6-1.3-1.3-1.3h-3.2c-.7 0-1.3.6-1.3 1.3v2.2c0 .5-.4.9-.9.9H10.9c-.8 0-1.4-.6-1.4-1.4v-1.2z" fill="#fff" opacity="0.95" /></svg>
+        </span>
+        <span class="cc-text"><strong>Customer Care</strong><small>Tap to call</small></span>
+    </a>
+</div>
+
+<script>
+(function(){
+    function initCustomerCare() {
+        try {
+            var widget = document.getElementById('customerCareWidget');
+            var link = document.getElementById('customerCareLink');
+            if (!widget || !link) return;
+            var footerPhone = document.querySelector('.footer-address a[href^="tel:"]');
+            if (footerPhone && footerPhone.getAttribute('href')) { link.setAttribute('href', footerPhone.getAttribute('href')); }
+            // Ensure visible by default
+            widget.style.opacity = '1';
+            setTimeout(function(){ widget.classList.add('show'); widget.setAttribute('aria-hidden','false'); }, 550);
+            // Only soften visibility near bottom, do not hide completely
+            var hideOnFooter = function(){
+              try {
+                var scrolledFromBottom = (document.documentElement.scrollHeight - window.scrollY - window.innerHeight);
+                if (scrolledFromBottom < 80) {
+                  widget.style.opacity = '0.6';
+                } else {
+                  widget.style.opacity = '1';
+                }
+              } catch(e){}
+            };
+            window.addEventListener('scroll', hideOnFooter, { passive: true }); hideOnFooter();
+            link.addEventListener('click', function(){ try { link.style.transform = 'scale(0.98)'; setTimeout(function(){ link.style.transform = ''; }, 160); } catch(e){} });
+        } catch (err) { console.error('Customer care widget init failed', err); }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCustomerCare); else initCustomerCare();
+})();
+</script>
+
+<!-- Three.js footer background animation (THREE loaded in header to avoid duplicates) -->
+<script src="/js/footer-three.js"></script>
+<script src="/loader/script.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
-

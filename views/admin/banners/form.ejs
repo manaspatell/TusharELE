@@ -10,19 +10,21 @@
         <div class="alert alert-danger"><%= error %></div>
     <% } %>
 
-    <form method="POST" action="<%= banner ? '/admin/banners/edit/' + banner._id : '/admin/banners/create' %>" 
+    <form method="POST" action="<%= banner ? baseUrl + '/banners/edit/' + banner._id : baseUrl + '/banners/create' %>" 
           enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
+                        <!-- Title and subtitle are not displayed on the frontend carousel.
+                             Keeping link and image only. These fields removed to avoid confusion. -->
                         <div class="mb-3">
-                            <label class="form-label">Title *</label>
+                            <label class="form-label">(Optional) Title - not displayed on frontend</label>
                             <input type="text" class="form-control" name="title" 
-                                   value="<%= banner ? banner.title : '' %>" required>
+                                   value="<%= banner ? banner.title : '' %>">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Subtitle</label>
+                            <label class="form-label">(Optional) Subtitle - not displayed on frontend</label>
                             <input type="text" class="form-control" name="subtitle" 
                                    value="<%= banner ? banner.subtitle : '' %>">
                         </div>
@@ -79,7 +81,7 @@
             <button type="submit" class="btn btn-primary">
                 <i class="bi bi-save"></i> <%= banner ? 'Update' : 'Create' %> Banner
             </button>
-            <a href="/admin/banners" class="btn btn-secondary">Cancel</a>
+            <a href="<%= baseUrl %>/banners" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>

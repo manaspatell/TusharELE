@@ -4,72 +4,75 @@ const productSchema = new mongoose.Schema({
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
-    required: true
+    required: true,
   },
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   slug: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
   description: {
     type: String,
-    default: ''
+    default: '',
   },
   price: {
     type: Number,
     required: true,
-    min: 0
+    min: 0,
   },
-  images: [{
-    type: String
-  }],
-  tags: [{
-    type: String
-  }],
+  images: [
+    {
+      type: String,
+    },
+  ],
+  tags: [
+    {
+      type: String,
+    },
+  ],
   sku: {
     type: String,
     unique: true,
-    sparse: true
+    sparse: true,
   },
   status: {
     type: String,
     enum: ['active', 'inactive'],
-    default: 'active'
+    default: 'active',
   },
   discount: {
     enabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     percentage: {
       type: Number,
       default: 0,
       min: 0,
-      max: 100
-    }
+      max: 100,
+    },
   },
   specifications: {
     type: Map,
     of: String,
-    default: {}
+    default: {},
   },
   created_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updated_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 productSchema.index({ name: 'text', description: 'text', tags: 'text' });
 
 module.exports = mongoose.model('Product', productSchema);
-

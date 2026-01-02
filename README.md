@@ -5,6 +5,7 @@ A modern, full-featured e-commerce platform built with Node.js, Express, and Mon
 ## Features
 
 ### Customer Features
+
 - Browse products by category
 - Product search and filtering
 - Shopping cart (session-based)
@@ -12,10 +13,10 @@ A modern, full-featured e-commerce platform built with Node.js, Express, and Mon
 - Blog/article reading
 - Static pages (About, Contact, FAQ, Policies)
 - Newsletter signup
-- Wishlist
 - Recently viewed items
 
 ### Admin Features
+
 - Secure admin login
 - Dashboard with statistics
 - Product management (CRUD)
@@ -29,11 +30,13 @@ A modern, full-featured e-commerce platform built with Node.js, Express, and Mon
 ## Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Create a `.env` file based on `.env.example`:
+
 ```bash
 cp .env.example .env
 ```
@@ -41,27 +44,32 @@ cp .env.example .env
 3. Update `.env` with your MongoDB connection string and other settings
 
 4. Seed the database with an admin account:
+
 ```bash
 npm run seed
 ```
 
 5. Start the server:
+
 ```bash
 npm start
 ```
 
 For development with auto-reload:
+
 ```bash
 npm run dev
 ```
 
 6. Access the application:
+
 - Customer site: http://localhost:3000
 - Admin panel: http://localhost:3000/admin
 
 ## Default Admin Credentials
 
 After running the seed script:
+
 - Username: `admin`
 - Password: `admin123`
 
@@ -106,6 +114,7 @@ The platform uses Gmail SMTP to send inquiry emails. To configure:
 ## Features Overview
 
 ### Customer Features
+
 - 🏠 **Homepage** with banner sliders, featured categories, and trending products
 - 🛍️ **Product Browsing** by category with filters and search
 - 🛒 **Shopping Cart** (session-based, no checkout)
@@ -117,6 +126,7 @@ The platform uses Gmail SMTP to send inquiry emails. To configure:
 - 🔍 **Live Search** functionality
 
 ### Admin Features
+
 - 📊 **Dashboard** with analytics (products, categories, inquiries, articles)
 - 📦 **Product Management** - Add/Edit/Delete with multiple images
 - 🏷️ **Category Management** - Organize products by categories
@@ -140,6 +150,7 @@ The platform uses Gmail SMTP to send inquiry emails. To configure:
 ## API Endpoints
 
 ### Customer Routes
+
 - `GET /` - Homepage
 - `GET /products` - Product listing
 - `GET /product/:slug` - Product details
@@ -150,6 +161,7 @@ The platform uses Gmail SMTP to send inquiry emails. To configure:
 - `POST /newsletter` - Subscribe to newsletter
 
 ### Admin Routes
+
 - `GET /admin/login` - Admin login page
 - `POST /admin/login` - Admin login
 - `GET /admin/dashboard` - Admin dashboard
@@ -192,4 +204,3 @@ For inquiries, contact: **tusharelectronics8439@gmail.com**
 ## License
 
 ISC
-

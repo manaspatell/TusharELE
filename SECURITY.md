@@ -5,12 +5,14 @@ This document outlines the security measures implemented in the Tushar Electroni
 ## ✅ Implemented Security Features
 
 ### 1. **Authentication & Authorization**
+
 - ✅ Password hashing with bcrypt (10 rounds)
 - ✅ Session-based authentication
 - ✅ Admin-only routes protection
 - ✅ Secure session storage in MongoDB
 
 ### 2. **Input Validation & Sanitization**
+
 - ✅ Express-validator for input validation
 - ✅ HTML sanitization with DOMPurify
 - ✅ XSS prevention in user inputs
@@ -19,12 +21,14 @@ This document outlines the security measures implemented in the Tushar Electroni
 - ✅ MongoDB ObjectId validation
 
 ### 3. **Rate Limiting**
+
 - ✅ Login attempts: 5 per 15 minutes
 - ✅ API requests: 100 per 15 minutes
 - ✅ Inquiry submissions: 10 per hour
 - ✅ Newsletter subscriptions: 5 per hour
 
 ### 4. **Security Headers (Helmet.js)**
+
 - ✅ Content Security Policy (CSP)
 - ✅ XSS Protection
 - ✅ Frame Options (clickjacking protection)
@@ -32,23 +36,27 @@ This document outlines the security measures implemented in the Tushar Electroni
 - ✅ Referrer Policy
 
 ### 5. **File Upload Security**
+
 - ✅ File type validation (MIME type + extension)
 - ✅ File size limits (5MB max)
 - ✅ Secure file naming (unique filenames)
 - ✅ Allowed types: JPEG, PNG, GIF, WebP only
 
 ### 6. **Session Security**
+
 - ✅ HTTP-only cookies
 - ✅ Secure cookies in production
 - ✅ Session expiration (24 hours)
 - ✅ Session stored in MongoDB
 
 ### 7. **Error Handling**
+
 - ✅ No sensitive information in error messages
 - ✅ Generic error messages in production
 - ✅ Detailed errors only in development
 
 ### 8. **NoSQL Injection Prevention**
+
 - ✅ Mongoose ObjectId validation
 - ✅ Parameterized queries
 - ✅ Input sanitization before database operations
@@ -56,16 +64,19 @@ This document outlines the security measures implemented in the Tushar Electroni
 ## 🔒 Security Best Practices
 
 ### Environment Variables
+
 - ✅ Secrets stored in `.env` file
 - ✅ `.env` excluded from version control
 - ⚠️ **Action Required**: Change default `SESSION_SECRET` in production
 
 ### Password Security
+
 - ✅ Passwords hashed with bcrypt
 - ✅ Minimum 6 characters (can be increased)
 - ⚠️ **Recommendation**: Enforce stronger password policy
 
 ### Database Security
+
 - ✅ MongoDB connection string in environment variables
 - ✅ Input validation before database operations
 - ⚠️ **Recommendation**: Use MongoDB Atlas with IP whitelisting
@@ -91,12 +102,14 @@ Before deploying to production, ensure:
 ## 📝 Security Notes
 
 ### Current Limitations
+
 1. **CSRF Protection**: Not implemented (consider adding for production)
 2. **Password Policy**: Basic (6 chars minimum)
 3. **Two-Factor Authentication**: Not implemented
 4. **API Keys**: Not implemented for external API access
 
 ### Recommendations
+
 1. Implement CSRF tokens for forms
 2. Add password strength requirements
 3. Consider 2FA for admin accounts
@@ -117,6 +130,7 @@ To test security:
 ## 📞 Security Issues
 
 If you discover a security vulnerability:
+
 1. Do NOT create a public issue
 2. Contact: tusharelectronics8439@gmail.com
 3. Include details and steps to reproduce
@@ -124,6 +138,7 @@ If you discover a security vulnerability:
 ## 🔄 Regular Updates
 
 Keep dependencies updated:
+
 ```bash
 npm audit
 npm audit fix
@@ -134,4 +149,3 @@ npm update
 
 **Last Updated**: 2024
 **Security Level**: Production-Ready (with recommended improvements)
-

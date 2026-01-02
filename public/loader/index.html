@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tushar Electronics — Loader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  </head>
+  <body>
+    <div id="preloader" class="preloader" aria-hidden="false">
+      <div class="preloader-inner">
+        <div class="canvas-glow">
+          <canvas
+            id="loaderCanvas"
+            class="loader-canvas"
+            aria-hidden="true"
+          ></canvas>
+          <div class="glow-ring" aria-hidden="true"></div>
+        </div>
+        <h1 class="typewriter" aria-live="polite">
+          <span class="tw-prefix">Welcome to</span>
+          <span class="tw-brand">Tushar Electronics</span>
+          <span class="tw-caret" aria-hidden="true">|</span>
+        </h1>
+        <div class="progress-wrap" aria-label="Loading Progress">
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              id="progressFill"
+              style="width: 0%"
+            ></div>
+          </div>
+          <div class="progress-text" id="progressText">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <main id="siteContent" class="site-content" hidden>
+      <section class="hero">
+        <h2 class="hero-title">Your website content</h2>
+        <p class="hero-sub">Revealed smoothly after the loader completes.</p>
+      </section>
+    </main>
+
+    <audio
+      id="completeSound"
+      src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b0a2ae495.mp3?filename=click-124467.mp3"
+      preload="auto"
+      muted
+    ></audio>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

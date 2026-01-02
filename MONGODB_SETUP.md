@@ -44,8 +44,9 @@ This is the easiest option - no installation needed!
    - Replace `MONGODB_URI` with your connection string
    - Replace `<password>` with your database user password
    - Replace `<dbname>` with `tushar_electronics` (or add it at the end)
-   
+
    Example:
+
    ```
    MONGODB_URI=mongodb+srv://tushar_admin:YourPassword123@cluster0.xxxxx.mongodb.net/tushar_electronics?retryWrites=true&w=majority
    ```
@@ -89,12 +90,14 @@ This is the easiest option - no installation needed!
 ### For Mac:
 
 1. **Install using Homebrew**
+
    ```bash
    brew tap mongodb/brew
    brew install mongodb-community
    ```
 
 2. **Start MongoDB**
+
    ```bash
    brew services start mongodb-community
    ```
@@ -107,12 +110,14 @@ This is the easiest option - no installation needed!
 ### For Linux (Ubuntu/Debian):
 
 1. **Install MongoDB**
+
    ```bash
    sudo apt-get update
    sudo apt-get install -y mongodb
    ```
 
 2. **Start MongoDB**
+
    ```bash
    sudo systemctl start mongod
    sudo systemctl enable mongod
@@ -134,6 +139,7 @@ npm run seed
 ```
 
 You should see:
+
 ```
 ✅ MongoDB Connected
 ✅ Default admin created (username: admin, password: admin123)
@@ -143,6 +149,7 @@ You should see:
 ```
 
 If you see errors, check:
+
 - MongoDB is running (for local installation)
 - Connection string is correct (for Atlas)
 - IP is whitelisted (for Atlas)
@@ -156,4 +163,3 @@ If you see errors, check:
 - **Local MongoDB**: Best if you want everything on your computer, faster for development
 
 **Recommendation**: Start with MongoDB Atlas - it's easier and works immediately!
-

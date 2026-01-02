@@ -4,32 +4,31 @@ const categorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   slug: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
   image: {
     type: String,
-    default: ''
+    default: '',
   },
   description: {
     type: String,
-    default: ''
+    default: '',
   },
   status: {
     type: String,
     enum: ['active', 'inactive'],
-    default: 'active'
+    default: 'active',
   },
   created_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Category', categorySchema);
-

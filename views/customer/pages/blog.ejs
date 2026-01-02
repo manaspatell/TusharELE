@@ -1,34 +1,71 @@
-<%- include('../partials/header', { title: 'Blog' }) %>
+<%- include('../partials/header', {
+    title: 'Blog',
+    metaDescription: 'Read articles and insights from Tushar Electronics. Latest news, tips, and innovations in agriculture.',
+    metaKeywords: (articles && articles.length > 0 ? articles.map(a => a.title).join(', ') : 'blog, articles, agriculture'),
+    canonical: 'https://tusharagro.com/blog'
+}) %>
+        <!-- JSON-LD: Blog Listing -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Blog & Articles",
+            "description": "Read articles and insights from Tushar Electronics. Latest news, tips, and innovations in agriculture.",
+            "url": "https://tusharagro.com/blog",
+            "hasPart": [
+                <% if (articles && articles.length > 0) { %>
+                    <% articles.forEach(function(article, idx) { %>
+                        {
+                            "@type": "Article",
+                            "name": "<%= article.title %>",
+                            "url": "https://tusharagro.com/article/<%= article.slug %>"
+                        }<%= idx < articles.length - 1 ? ',' : '' %>
+                    <% }); %>
+                <% } %>
+            ]
+        }
+        </script>
 
-<div class="container my-5">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5>Categories</h5>
-                </div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <a href="/blog" class="list-group-item list-group-item-action <%= currentCategory === 'all' ? 'active' : '' %>">
-                            All Articles
+<div class="container my-5 blog-page products-page">
+    <aside class="sidebar">
+        <div class="card mb-4 category-filter-card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0 d-none d-md-block">Categories</h5>
+                <!-- Mobile accordion toggle -->
+                <button class="btn btn-link p-0 w-100 text-start category-toggle d-md-none" type="button" aria-expanded="false" aria-controls="blogCategoryList">
+                    <span class="d-inline-flex align-items-center gap-2 fw-semibold">
+                        <i class="bi bi-journal-text"></i>
+                        Categories
+                    </span>
+                    <i class="bi bi-chevron-down ms-1 toggle-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="card-body categories-collapsible" id="blogCategoryList" aria-hidden="true">
+                <div class="list-group category-list">
+                    <a href="/blog" class="list-group-item list-group-item-action category-list-item <%= currentCategory === 'all' ? 'active' : '' %>">
+                        <span class="cat-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+                        <span class="cat-label">All Articles</span>
+                    </a>
+                    <% (categories || []).forEach(cat => { %>
+                        <a href="/blog?category=<%= cat %>" class="list-group-item list-group-item-action category-list-item <%= currentCategory === cat ? 'active' : '' %>">
+                            <span class="cat-icon"><i class="bi bi-tag"></i></span>
+                            <span class="cat-label"><%= cat.charAt(0).toUpperCase() + cat.slice(1) %></span>
                         </a>
-                        <% categories.forEach(cat => { %>
-                            <a href="/blog?category=<%= cat %>" 
-                               class="list-group-item list-group-item-action <%= currentCategory === cat ? 'active' : '' %>">
-                                <%= cat.charAt(0).toUpperCase() + cat.slice(1) %>
-                            </a>
-                        <% }); %>
-                    </div>
+                    <% }); %>
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
-            <h1 class="mb-4">Blog & Articles</h1>
-            <div class="row g-4">
-                <% if (articles && articles.length > 0) { %>
-                    <% articles.forEach(article => { %>
-                        <div class="col-md-4">
-                            <div class="card h-100 shadow-sm article-card">
+    </aside>
+
+    <main class="main">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h4 mb-0">Blog & Articles</h1>
+        </div>
+
+        <div class="articles-wrapper grid-auto">
+            <% if (articles && articles.length > 0) { %>
+                <% articles.forEach(article => { %>
+                    <article class="card h-100 shadow-sm article-card">
                                 <% if (article.image) { %>
                                     <div class="article-image-container">
                                         <img src="<%= article.image %>" class="card-img-top article-image" alt="<%= article.title %>" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
@@ -58,23 +95,28 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                <% } else { %>
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No articles found.</p>
-                    </div>
-                <% } %>
-            </div>
+                    </article>
+                <% }); %>
+            <% } else { %>
+                <div class="text-center w-100"><p class="text-muted">No articles found.</p></div>
+            <% } %>
 
             <% if (totalPages > 1) { %>
-                <nav class="mt-4">
+                <nav class="mt-4" aria-label="Articles pagination">
                     <ul class="pagination justify-content-center">
-                        <% for (let i = 1; i <= totalPages; i++) { %>
-                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
-                                <a class="page-link" href="?page=<%= i %>&category=<%= currentCategory %>">
-                                    <%= i %>
+                        <% if (currentPage > 1) { %>
+                            <% const prevPage = currentPage - 1; %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= prevPage %>&category=<%= currentCategory %>">
+                                    &laquo; Previous Page
+                                </a>
+                            </li>
+                        <% } %>
+                        <% if (currentPage < totalPages) { %>
+                            <% const nextPage = currentPage + 1; %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= nextPage %>&category=<%= currentCategory %>">
+                                    Next Page &raquo;
                                 </a>
                             </li>
                         <% } %>
@@ -82,8 +124,104 @@
                 </nav>
             <% } %>
         </div>
-    </div>
+    </main>
 </div>
 
 <%- include('../partials/footer') %>
+
+<script>
+// Randomized, on-scroll animations for blog article cards
+document.addEventListener('DOMContentLoaded', function(){
+    const cards = document.querySelectorAll('.blog-page .article-card');
+    if (!cards.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const variants = ['left','right','up','down','zoom','tilt'];
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                el.style.willChange = 'transform, opacity';
+                const idx = Number(el.dataset.seq) || 0;
+                const delaySec = ( (idx % 8) * 0.06 + Math.random() * 0.08 );
+                el.style.animationDelay = delaySec.toFixed(2) + 's';
+                el.classList.add('in');
+                el.addEventListener('animationend', () => { el.style.willChange = 'auto'; }, { once: true });
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+
+    cards.forEach((el, i) => {
+        const variant = variants[Math.floor(Math.random() * variants.length)];
+        el.classList.add('pp-anim');
+        el.dataset.anim = variant;
+        el.dataset.seq = i;
+        io.observe(el);
+    });
+});
+</script>
+
+<script>
+// Animate blog category list items similar to product filters
+document.addEventListener('DOMContentLoaded', function(){
+    const items = document.querySelectorAll('.blog-page .list-group .list-group-item');
+    if (!items.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const variants = ['left','right','up','down','zoom','tilt'];
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                el.style.willChange = 'transform, opacity';
+                const idx = Number(el.dataset.seq) || 0;
+                const delaySec = ( (idx % 8) * 0.05 + Math.random() * 0.06 );
+                el.style.animationDelay = delaySec.toFixed(2) + 's';
+                el.classList.add('in');
+                el.addEventListener('animationend', () => { el.style.willChange = 'auto'; }, { once: true });
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
+
+    items.forEach((el, i) => {
+        const variant = variants[Math.floor(Math.random() * variants.length)];
+        el.classList.add('pp-anim');
+        el.dataset.anim = variant;
+        el.dataset.seq = i;
+        io.observe(el);
+    });
+});
+</script>
+
+<script>
+// Blog categories accordion behavior mirroring products page
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.querySelector('.blog-page .category-toggle');
+    const collapsible = document.getElementById('blogCategoryList');
+    if (!(toggleBtn && collapsible)) return;
+
+    const mq = window.matchMedia('(max-width: 600px)');
+    const applyInitial = () => {
+        if (mq.matches) {
+            collapsible.classList.remove('open');
+            collapsible.setAttribute('aria-hidden','true');
+            toggleBtn.setAttribute('aria-expanded','false');
+        } else {
+            collapsible.classList.add('open');
+            collapsible.setAttribute('aria-hidden','false');
+            toggleBtn.setAttribute('aria-expanded','true');
+        }
+    };
+    applyInitial();
+    mq.addEventListener('change', applyInitial);
+
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = collapsible.classList.toggle('open');
+        collapsible.setAttribute('aria-hidden', !isOpen);
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+        const icon = toggleBtn.querySelector('.toggle-icon');
+        if (icon) icon.classList.toggle('rotated', isOpen);
+    });
+});
+</script>
 

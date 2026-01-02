@@ -42,8 +42,9 @@ Follow these steps in order to get your Tushar Electronics platform up and runni
    - Replace with your Atlas connection string
    - Add database name: `...mongodb.net/tushar_electronics?retryWrites=true&w=majority`
    - Replace `<password>` with your database user password
-   
+
    Example:
+
    ```
    MONGODB_URI=mongodb+srv://tushar_admin:YourPassword123@cluster0.xxxxx.mongodb.net/tushar_electronics?retryWrites=true&w=majority
    ```
@@ -100,6 +101,7 @@ npm run seed
 ```
 
 **Expected Output:**
+
 ```
 ✅ MongoDB Connected
 ✅ Default admin created (username: admin, password: admin123)
@@ -110,6 +112,7 @@ npm run seed
 ```
 
 **If you see errors:**
+
 - Check MongoDB connection in `.env`
 - Make sure MongoDB is running (if local)
 - Verify connection string is correct (if Atlas)
@@ -119,16 +122,19 @@ npm run seed
 ## ✅ Step 4: Start the Server
 
 **Development mode (with auto-reload):**
+
 ```bash
 npm run dev
 ```
 
 **Production mode:**
+
 ```bash
 npm start
 ```
 
 **Expected Output:**
+
 ```
 ✅ Created directory: public/uploads/products
 ✅ Created directory: public/uploads/categories
@@ -142,18 +148,22 @@ npm start
 ## ✅ Step 5: Access Your Application
 
 ### Customer Website
+
 Open in browser: **http://localhost:3000**
 
 You should see:
+
 - Homepage with banner slider
 - Featured categories
 - Product listings
 - Blog section
 
 ### Admin Panel
+
 Open in browser: **http://localhost:3000/admin/login**
 
 **Default Login:**
+
 - Username: `admin`
 - Password: `admin123`
 
@@ -164,6 +174,7 @@ Open in browser: **http://localhost:3000/admin/login**
 ## ✅ Step 6: Test Everything
 
 ### Test Customer Features:
+
 1. ✅ Browse products
 2. ✅ View product details
 3. ✅ Add products to cart
@@ -172,6 +183,7 @@ Open in browser: **http://localhost:3000/admin/login**
 6. ✅ Read blog articles
 
 ### Test Admin Features:
+
 1. ✅ Login to admin panel
 2. ✅ View dashboard
 3. ✅ Add a new category
@@ -181,6 +193,7 @@ Open in browser: **http://localhost:3000/admin/login**
 7. ✅ Add a banner
 
 ### Test Email:
+
 1. ✅ Send an inquiry from customer site
 2. ✅ Check `tusharelectronics8439@gmail.com` for the inquiry email
 3. ✅ Check for auto-reply to customer
@@ -190,33 +203,44 @@ Open in browser: **http://localhost:3000/admin/login**
 ## 🐛 Troubleshooting
 
 ### MongoDB Connection Error
+
 ```
 ❌ MongoDB Connection Error: connect ECONNREFUSED
 ```
+
 **Solution:**
+
 - If using Atlas: Check connection string and IP whitelist
 - If using local: Make sure MongoDB is running
 - Verify `.env` file has correct `MONGODB_URI`
 
 ### Email Not Sending
+
 ```
 Error sending inquiry email
 ```
+
 **Solution:**
+
 - Verify Gmail App Password is correct in `.env`
 - Check 2-Step Verification is enabled
 - Ensure `EMAIL_PASS` is the 16-character app password (not regular password)
 
 ### Port Already in Use
+
 ```
 Error: listen EADDRINUSE: address already in use :::3000
 ```
+
 **Solution:**
+
 - Change `PORT=3000` to another port (e.g., `PORT=3001`) in `.env`
 - Or stop the process using port 3000
 
 ### Images Not Uploading
+
 **Solution:**
+
 - Check `public/uploads/` directories exist
 - Verify file size is under 5MB
 - Ensure file is an image (JPEG, PNG, GIF, WebP)
@@ -226,12 +250,14 @@ Error: listen EADDRINUSE: address already in use :::3000
 ## 📋 Quick Checklist
 
 Before you start:
+
 - [ ] MongoDB is set up (Atlas or local)
 - [ ] `.env` file has correct `MONGODB_URI`
 - [ ] Gmail App Password is configured in `.env`
 - [ ] All dependencies installed (`npm install`)
 
 To run:
+
 - [ ] Run `npm run seed` (creates admin account)
 - [ ] Run `npm run dev` (starts server)
 - [ ] Access http://localhost:3000
@@ -243,6 +269,7 @@ To run:
 ## 🎉 You're Done!
 
 Once everything is running:
+
 1. ✅ Add your products and categories
 2. ✅ Create homepage banners
 3. ✅ Write blog articles
@@ -254,10 +281,10 @@ Once everything is running:
 ## 📞 Need Help?
 
 If you encounter issues:
+
 1. Check the error message
 2. Review `MONGODB_SETUP.md` for MongoDB help
 3. Review `SECURITY.md` for security info
 4. Check console logs for detailed errors
 
 **Good luck! 🚀**
-

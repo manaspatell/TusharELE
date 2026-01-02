@@ -22,13 +22,17 @@ exports.list = async (req, res) => {
     const total = await Product.countDocuments();
 
     res.render('admin/products/list', {
+      baseUrl: req.baseUrl,
       products,
       currentPage: page,
       totalPages: Math.ceil(total / limit),
-      total
+      total,
     });
   } catch (error) {
-    res.render('admin/products/list', { error: 'Failed to load products' });
+    res.render('admin/products/list', {
+      error: 'Failed to load products',
+      baseUrl: req.baseUrl,
+    });
   }
 };
 
@@ -36,24 +40,39 @@ exports.list = async (req, res) => {
 exports.createForm = async (req, res) => {
   try {
     const categories = await Category.find({ status: 'active' });
-    res.render('admin/products/form', { categories, product: null });
+    res.render('admin/products/form', {
+      categories,
+      product: null,
+      baseUrl: req.baseUrl,
+    });
   } catch (error) {
-    res.redirect('/admin/products');
+    res.redirect(`${req.baseUrl}/products`);
   }
 };
 
 // Create product
 exports.create = async (req, res) => {
   try {
-    const { name, category_id, description, price, sku, tags, status, specifications, discount_enabled, discount_percentage } = req.body;
-    
+    const {
+      name,
+      category_id,
+      description,
+      price,
+      sku,
+      tags,
+      status,
+      specifications,
+      discount_enabled,
+      discount_percentage,
+    } = req.body;
+
     console.log('\n=== CREATING PRODUCT ===');
     console.log('Product name:', name);
     console.log('Request body keys:', Object.keys(req.body));
     console.log('Files received:', req.files ? req.files.length : 0);
     console.log('req.file:', req.file);
     console.log('req.files:', req.files);
-    
+
     if (req.files && req.files.length > 0) {
       req.files.forEach((file, idx) => {
         console.log(`  File ${idx + 1}:`);
@@ -71,19 +90,19 @@ exports.create = async (req, res) => {
       console.log('    3. File size exceeded limit');
       console.log('    4. File type not allowed');
     }
-    
+
     // Validate category_id is a valid MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(category_id)) {
       return res.status(400).render('admin/products/form', {
         categories: await Category.find({ status: 'active' }),
         product: null,
-        error: 'Invalid category selected'
+        error: 'Invalid category selected',
       });
     }
-    
+
     let images = [];
     if (req.files && req.files.length > 0) {
-      images = req.files.map(file => {
+      images = req.files.map((file) => {
         const imagePath = `/uploads/products/${file.filename}`;
         const fullPath = path.join(__dirname, '..', 'public', imagePath);
         const fileExists = fs.existsSync(fullPath);
@@ -93,7 +112,7 @@ exports.create = async (req, res) => {
           path: imagePath,
           fullPath: fullPath,
           exists: fileExists,
-          size: file.size
+          size: file.size,
         });
         if (!fileExists) {
           console.log('⚠️  WARNING: File not found at expected path!');
@@ -101,16 +120,21 @@ exports.create = async (req, res) => {
         return imagePath;
       });
     }
-    
+
     console.log('📊 Total images to save:', images.length);
     console.log('📊 Image paths:', images);
-    const tagArray = tags ? tags.split(',').map(t => sanitizeText(t.trim())).filter(t => t) : [];
-    
+    const tagArray = tags
+      ? tags
+          .split(',')
+          .map((t) => sanitizeText(t.trim()))
+          .filter((t) => t)
+      : [];
+
     // Handle specifications - convert to Map
     const specsMap = new Map();
     if (specifications && specifications.trim()) {
       const specPairs = specifications.split('\n');
-      specPairs.forEach(pair => {
+      specPairs.forEach((pair) => {
         const [key, value] = pair.split(':');
         if (key && value) {
           specsMap.set(sanitizeText(key.trim()), sanitizeText(value.trim()));
@@ -121,7 +145,10 @@ exports.create = async (req, res) => {
     // Handle discount
     const discount = {
       enabled: discount_enabled === 'on' || discount_enabled === true,
-      percentage: Math.max(0, Math.min(100, parseFloat(discount_percentage) || 0))
+      percentage: Math.max(
+        0,
+        Math.min(100, parseFloat(discount_percentage) || 0)
+      ),
     };
 
     const product = new Product({
@@ -133,40 +160,44 @@ exports.create = async (req, res) => {
       images: images || [],
       tags: tagArray,
       sku: sku ? sanitizeText(sku) : '',
-      status: (status === 'active' || status === 'inactive') ? status : 'active',
+      status: status === 'active' || status === 'inactive' ? status : 'active',
       specifications: specsMap,
-      discount: discount
+      discount: discount,
     });
 
     console.log('Product to save:', {
       name: product.name,
       images: product.images,
-      imagesCount: product.images.length
+      imagesCount: product.images.length,
     });
 
     await product.save();
-    
+
     // Verify save by fetching from database
     const savedProduct = await Product.findById(product._id);
     console.log('✅ Product saved successfully with ID:', savedProduct._id);
     console.log('✅ Product images in database:', savedProduct.images);
-    console.log('✅ Images count:', savedProduct.images ? savedProduct.images.length : 0);
-    
+    console.log(
+      '✅ Images count:',
+      savedProduct.images ? savedProduct.images.length : 0
+    );
+
     if (savedProduct.images && savedProduct.images.length > 0) {
       console.log('✅ Images are linked to product!');
     } else {
       console.log('⚠️  WARNING: Product saved but no images linked!');
     }
-    
-    res.redirect('/admin/products');
+
+    res.redirect(`${req.baseUrl}/products`);
   } catch (error) {
     console.error('❌ Error creating product:', error);
     console.error('Error stack:', error.stack);
     const categories = await Category.find({ status: 'active' });
-    res.render('admin/products/form', { 
-      categories, 
-      product: null, 
-      error: 'Failed to create product: ' + error.message 
+    res.render('admin/products/form', {
+      categories,
+      product: null,
+      error: 'Failed to create product: ' + error.message,
+      baseUrl: req.baseUrl,
     });
   }
 };
@@ -174,9 +205,11 @@ exports.create = async (req, res) => {
 // Show edit form
 exports.editForm = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate('category_id');
+    const product = await Product.findById(req.params.id).populate(
+      'category_id'
+    );
     const categories = await Category.find({ status: 'active' });
-    
+
     // Convert specifications Map to plain object for rendering
     if (product && product.specifications instanceof Map) {
       const specsObj = {};
@@ -185,21 +218,36 @@ exports.editForm = async (req, res) => {
       });
       product.specifications = specsObj;
     }
-    
-    res.render('admin/products/form', { product, categories });
+
+    res.render('admin/products/form', {
+      product,
+      categories,
+      baseUrl: req.baseUrl,
+    });
   } catch (error) {
-    res.redirect('/admin/products');
+    res.redirect(`${req.baseUrl}/products`);
   }
 };
 
 // Update product
 exports.update = async (req, res) => {
   try {
-    const { name, category_id, description, price, sku, tags, status, specifications, discount_enabled, discount_percentage } = req.body;
+    const {
+      name,
+      category_id,
+      description,
+      price,
+      sku,
+      tags,
+      status,
+      specifications,
+      discount_enabled,
+      discount_percentage,
+    } = req.body;
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      return res.redirect('/admin/products');
+      return res.redirect(`${req.baseUrl}/products`);
     }
 
     // Validate category_id is a valid MongoDB ObjectId
@@ -208,30 +256,39 @@ exports.update = async (req, res) => {
       return res.render('admin/products/form', {
         product,
         categories,
-        error: 'Invalid category selected'
+        error: 'Invalid category selected',
+        baseUrl: req.baseUrl,
       });
     }
 
-    const tagArray = tags ? tags.split(',').map(t => sanitizeText(t.trim())).filter(t => t) : [];
-    
+    const tagArray = tags
+      ? tags
+          .split(',')
+          .map((t) => sanitizeText(t.trim()))
+          .filter((t) => t)
+      : [];
+
     // Handle specifications - convert to Map if provided
     if (specifications && specifications.trim()) {
       const specs = {};
       const specPairs = specifications.split('\n');
-      specPairs.forEach(pair => {
+      specPairs.forEach((pair) => {
         const [key, value] = pair.split(':');
         if (key && value) {
           specs[sanitizeText(key.trim())] = sanitizeText(value.trim());
         }
       });
-      
+
       // Convert plain object to Map for Mongoose
       const specsMap = new Map();
       Object.entries(specs).forEach(([key, value]) => {
         specsMap.set(key, value);
       });
       product.specifications = specsMap;
-    } else if (specifications === '' || (specifications && specifications.trim() === '')) {
+    } else if (
+      specifications === '' ||
+      (specifications && specifications.trim() === '')
+    ) {
       // If specifications field is empty, clear it
       product.specifications = new Map();
     }
@@ -242,18 +299,24 @@ exports.update = async (req, res) => {
     if (category_id) {
       product.category_id = category_id;
     }
-    product.description = description ? sanitizeHtml(description) : product.description;
+    product.description = description
+      ? sanitizeHtml(description)
+      : product.description;
     product.price = Math.max(0, parseFloat(price) || product.price);
     product.tags = tagArray;
     product.sku = sku ? sanitizeText(sku) : product.sku;
-    product.status = (status === 'active' || status === 'inactive') ? status : product.status;
-    
+    product.status =
+      status === 'active' || status === 'inactive' ? status : product.status;
+
     // Handle discount
     product.discount = {
       enabled: discount_enabled === 'on' || discount_enabled === true,
-      percentage: Math.max(0, Math.min(100, parseFloat(discount_percentage) || 0))
+      percentage: Math.max(
+        0,
+        Math.min(100, parseFloat(discount_percentage) || 0)
+      ),
     };
-    
+
     product.updated_at = Date.now();
 
     // Handle new image uploads - append to existing images
@@ -261,12 +324,14 @@ exports.update = async (req, res) => {
     console.log('Files received:', req.files ? req.files.length : 0);
     if (req.files) {
       req.files.forEach((file, idx) => {
-        console.log(`  File ${idx + 1}: ${file.filename}, size: ${file.size}, path: ${file.path}`);
+        console.log(
+          `  File ${idx + 1}: ${file.filename}, size: ${file.size}, path: ${file.path}`
+        );
       });
     }
-    
+
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map(file => {
+      const newImages = req.files.map((file) => {
         const imagePath = `/uploads/products/${file.filename}`;
         const fullPath = path.join(__dirname, '..', 'public', imagePath);
         console.log('Updating product with image path:', imagePath);
@@ -287,25 +352,29 @@ exports.update = async (req, res) => {
     console.log('Product before save:', {
       name: product.name,
       images: product.images,
-      imagesCount: product.images ? product.images.length : 0
+      imagesCount: product.images ? product.images.length : 0,
     });
 
     await product.save();
-    
+
     // Verify the save
     const savedProduct = await Product.findById(product._id);
     console.log('✅ Product saved successfully');
     console.log('✅ Product images in database:', savedProduct.images);
-    console.log('✅ Images count:', savedProduct.images ? savedProduct.images.length : 0);
-    
-    res.redirect('/admin/products');
+    console.log(
+      '✅ Images count:',
+      savedProduct.images ? savedProduct.images.length : 0
+    );
+
+    res.redirect(`${req.baseUrl}/products`);
   } catch (error) {
     console.error('Error updating product:', error);
     const categories = await Category.find({ status: 'active' });
     res.render('admin/products/form', {
       product: await Product.findById(req.params.id).populate('category_id'),
       categories,
-      error: 'Failed to update product: ' + error.message
+      error: 'Failed to update product: ' + error.message,
+      baseUrl: req.baseUrl,
     });
   }
 };
@@ -314,22 +383,22 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    
+
     if (product) {
       // Delete associated images
-      product.images.forEach(image => {
+      product.images.forEach((image) => {
         const imagePath = path.join(__dirname, '..', 'public', image);
         if (fs.existsSync(imagePath)) {
           fs.unlinkSync(imagePath);
         }
       });
-      
+
       await Product.findByIdAndDelete(req.params.id);
     }
-    
-    res.redirect('/admin/products');
+
+    res.redirect(`${req.baseUrl}/products`);
   } catch (error) {
-    res.redirect('/admin/products');
+    res.redirect(`${req.baseUrl}/products`);
   }
 };
 
@@ -338,20 +407,19 @@ exports.deleteImage = async (req, res) => {
   try {
     const { productId, imagePath } = req.body;
     const product = await Product.findById(productId);
-    
+
     if (product) {
-      product.images = product.images.filter(img => img !== imagePath);
+      product.images = product.images.filter((img) => img !== imagePath);
       await product.save();
-      
+
       const fullPath = path.join(__dirname, '..', 'public', imagePath);
       if (fs.existsSync(fullPath)) {
         fs.unlinkSync(fullPath);
       }
     }
-    
+
     res.json({ success: true });
   } catch (error) {
     res.json({ success: false, error: error.message });
   }
 };
-

@@ -82,7 +82,7 @@
                                     </td>
                                     <td><%= new Date(inquiry.created_at).toLocaleDateString() %></td>
                                     <td>
-                                        <a href="/admin/inquiries/view/<%= inquiry._id %>" class="btn btn-sm btn-primary">
+                                        <a href="<%= baseUrl %>/inquiries/view/<%= inquiry._id %>" class="btn btn-sm btn-primary">
                                             <i class="bi bi-eye"></i> View
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger" 
@@ -118,7 +118,7 @@
 
 <script>
 function updateStatus(id, status) {
-    fetch('/admin/inquiries/update-status/' + id, {
+    fetch('<%= baseUrl %>/inquiries/update-status/' + id, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status })
@@ -134,7 +134,7 @@ function updateStatus(id, status) {
 function deleteInquiry(id) {
     if (!confirm('Are you sure you want to delete this inquiry?')) return;
     
-    fetch('/admin/inquiries/delete/' + id, {
+    fetch('<%= baseUrl %>/inquiries/delete/' + id, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     })

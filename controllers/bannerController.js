@@ -1,12 +1,11 @@
 const Banner = require('../models/Banner');
-const fs = require('fs');
-const path = require('path');
+const { buildUploadPath, deletePublicFile } = require('../utils/helpers');
 
 // List all banners
 exports.list = async (req, res) => {
   try {
     const banners = await Banner.find().sort({ order: 1, created_at: -1 });
-    res.render('admin/banners/list', { banners });
+    res.render('admin/banners/list', { banners, baseUrl: req.baseUrl });
   } catch (error) {
     res.render('admin/banners/list', { error: 'Failed to load banners' });
   }
@@ -14,37 +13,39 @@ exports.list = async (req, res) => {
 
 // Show create form
 exports.createForm = (req, res) => {
-  res.render('admin/banners/form', { banner: null });
+  res.render('admin/banners/form', { banner: null, baseUrl: req.baseUrl });
 };
 
 // Create banner
 exports.create = async (req, res) => {
   try {
     const { title, subtitle, link, status, order } = req.body;
-    
+
     if (!req.file) {
-      return res.render('admin/banners/form', { 
-        banner: null, 
-        error: 'Image is required' 
+      return res.render('admin/banners/form', {
+        banner: null,
+        error: 'Image is required',
+        baseUrl: req.baseUrl,
       });
     }
 
     const banner = new Banner({
       title,
       subtitle,
-      image: `/uploads/banners/${req.file.filename}`,
+      image: buildUploadPath('banners', req.file.filename),
       link: link || '',
       status: status || 'active',
-      order: parseInt(order) || 0
+      order: parseInt(order) || 0,
     });
 
     await banner.save();
-    res.redirect('/admin/banners');
+    res.redirect(`${req.baseUrl}/banners`);
   } catch (error) {
     console.error(error);
-    res.render('admin/banners/form', { 
-      banner: null, 
-      error: 'Failed to create banner' 
+    res.render('admin/banners/form', {
+      banner: null,
+      error: 'Failed to create banner',
+      baseUrl: req.baseUrl,
     });
   }
 };
@@ -53,9 +54,9 @@ exports.create = async (req, res) => {
 exports.editForm = async (req, res) => {
   try {
     const banner = await Banner.findById(req.params.id);
-    res.render('admin/banners/form', { banner });
+    res.render('admin/banners/form', { banner, baseUrl: req.baseUrl });
   } catch (error) {
-    res.redirect('/admin/banners');
+    res.redirect(`${req.baseUrl}/banners`);
   }
 };
 
@@ -66,7 +67,7 @@ exports.update = async (req, res) => {
     const banner = await Banner.findById(req.params.id);
 
     if (!banner) {
-      return res.redirect('/admin/banners');
+      return res.redirect(`${req.baseUrl}/banners`);
     }
 
     banner.title = title;
@@ -78,19 +79,16 @@ exports.update = async (req, res) => {
     if (req.file) {
       // Delete old image
       if (banner.image) {
-        const oldPath = path.join(__dirname, '..', 'public', banner.image);
-        if (fs.existsSync(oldPath)) {
-          fs.unlinkSync(oldPath);
-        }
+        deletePublicFile(banner.image);
       }
-      banner.image = `/uploads/banners/${req.file.filename}`;
+      banner.image = buildUploadPath('banners', req.file.filename);
     }
 
     await banner.save();
-    res.redirect('/admin/banners');
+    res.redirect(`${req.baseUrl}/banners`);
   } catch (error) {
     console.error(error);
-    res.redirect('/admin/banners');
+    res.redirect(`${req.baseUrl}/banners`);
   }
 };
 
@@ -98,22 +96,18 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const banner = await Banner.findById(req.params.id);
-    
+
     if (banner) {
       // Delete image
       if (banner.image) {
-        const imagePath = path.join(__dirname, '..', 'public', banner.image);
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
+        deletePublicFile(banner.image);
       }
-      
+
       await Banner.findByIdAndDelete(req.params.id);
     }
-    
-    res.redirect('/admin/banners');
+
+    res.redirect(`${req.baseUrl}/banners`);
   } catch (error) {
-    res.redirect('/admin/banners');
+    res.redirect(`${req.baseUrl}/banners`);
   }
 };
-

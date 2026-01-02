@@ -4,53 +4,54 @@ const articleSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   slug: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
   content: {
     type: String,
-    required: true
+    required: true,
   },
   excerpt: {
     type: String,
-    default: ''
+    default: '',
   },
   image: {
     type: String,
-    default: ''
+    default: '',
   },
-  tags: [{
-    type: String
-  }],
+  tags: [
+    {
+      type: String,
+    },
+  ],
   category: {
     type: String,
-    default: 'general'
+    default: 'general',
   },
   status: {
     type: String,
     enum: ['published', 'draft'],
-    default: 'draft'
+    default: 'draft',
   },
   views: {
     type: Number,
-    default: 0
+    default: 0,
   },
   created_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updated_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 articleSchema.index({ title: 'text', content: 'text', tags: 'text' });
 
 module.exports = mongoose.model('Article', articleSchema);
-

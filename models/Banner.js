@@ -4,34 +4,33 @@ const bannerSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   subtitle: {
     type: String,
-    default: ''
+    default: '',
   },
   image: {
     type: String,
-    required: true
+    required: true,
   },
   link: {
     type: String,
-    default: ''
+    default: '',
   },
   status: {
     type: String,
     enum: ['active', 'inactive'],
-    default: 'active'
+    default: 'active',
   },
   order: {
     type: Number,
-    default: 0
+    default: 0,
   },
   created_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Banner', bannerSchema);
-

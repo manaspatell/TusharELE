@@ -1,33 +1,247 @@
 <%- include('../partials/header', { title: 'About Us' }) %>
 
-<div class="container my-5">
-    <h1 class="mb-4">About Tushar Electronics</h1>
-    <div class="row">
-        <div class="col-md-8">
-            <p class="lead">Welcome to Tushar Electronics, your trusted partner for all your electronic needs.</p>
-            <p>We are a leading electronics retailer specializing in TVs, Air Conditioners, Washing Machines, and a wide range of home appliances. With years of experience in the industry, we are committed to providing our customers with high-quality products and exceptional service.</p>
-            <h3 class="mt-4">Our Mission</h3>
-            <p>To provide our customers with the best electronic products at competitive prices, backed by excellent customer service and support.</p>
-            <h3 class="mt-4">Why Choose Us?</h3>
-            <ul>
-                <li>Wide selection of quality electronics</li>
-                <li>Competitive pricing</li>
-                <li>Expert advice and support</li>
-                <li>Fast and reliable service</li>
-                <li>Customer satisfaction guarantee</li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Contact Us</h5>
-                    <p><i class="bi bi-envelope"></i> tusharelectronics8439@gmail.com</p>
-                    <p><i class="bi bi-telephone"></i> Contact us for inquiries</p>
+<main class="container py-5">
+        <style>
+            @media (max-width: 576px) {
+                .hero-title { font-size: 1.4rem; line-height: 1.3; }
+                .hero-subtitle { font-size: .95rem; }
+                .feature-chip-grid .mini-stat { padding: .5rem .75rem; }
+                .mini-stat .stat-label { font-size: .85rem; }
+                .section-header h2 { font-size: 1.1rem; }
+                .section-text { font-size: .95rem; }
+                .choose-item { padding: .75rem; }
+                .choose-item h3 { font-size: .95rem; }
+                .choose-item p { font-size: .9rem; }
+                .card-inner { padding: 1rem; }
+                .get-started-cta .btn { width: 100%; }
+            }
+            @media (max-width: 768px) {
+                .hero-row { flex-direction: column-reverse; }
+            }
+        </style>
+    <!-- Hero / Intro -->
+    <section class="fade-section">
+        <div class="row align-items-center gy-4 hero-row">
+            <div class="col-lg-7 hero-text-column">
+                <h1 class="display-6 fw-semibold hero-title mb-3 scale-in">About <span class="brand-accent">Tushar Electronics</span></h1>
+                <p class="lead hero-subtitle mb-4 fade-left">Tushar Electronics is dedicated to sustainable, pesticide‑free agriculture. We design, manufacture, and deploy integrated solutions that lower chemical use, protect crops, and improve farm resilience. Through research‑led engineering and field validation, we help growers adopt practical tools and methods that support healthier plants, cleaner produce, and long‑term soil and ecosystem balance.</p>
+                <div class="hero-highlight-cards feature-chip-grid">
+                    <div class="mini-stat shadow-sm scale-in" style="animation-delay:.05s;">
+                        <i class="bi bi-graph-up"></i>
+                        <span class="stat-label">Outcome‑Driven</span>
+                    </div>
+                    <div class="mini-stat shadow-sm scale-in" style="animation-delay:.1s;">
+                        <i class="bi bi-person-check"></i>
+                        <span class="stat-label">Consultative Expertise</span>
+                    </div>
+                    <div class="mini-stat shadow-sm scale-in" style="animation-delay:.15s;">
+                        <i class="bi bi-shield-check"></i>
+                        <span class="stat-label">Reliable & Tested</span>
+                    </div>
+                    <!-- Optional fourth chip (now visible on all screens) -->
+                    <div class="mini-stat shadow-sm scale-in optional-chip" style="animation-delay:.2s;">
+                        <i class="bi bi-tree-fill"></i>
+                        <span class="stat-label">Sustainability First</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="slide-up fullwidth-mobile">
+                    <div class="card-inner">
+                        <h2 class="h5 fw-semibold mb-3">Get in Touch</h2>
+                        <p class="small text-muted mb-3">Questions about trap selection, plasma‑treated water use, or custom builds? Reach our responsive agriculture solutions team.</p>
+                        <ul class="list-unstyled mb-4">
+                            <li class="d-flex align-items-start mb-3">
+                                <span class="ac-icon"><i class="bi bi-envelope-fill"></i></span>
+                                <span>
+                                    <strong class="d-block">Email</strong>
+                                    <a href="mailto:tusharelectronics8439@gmail.com" class="text-decoration-none">tusharelectronics8439@gmail.com</a>
+                                </span>
+                            </li>
+                            <li class="d-flex align-items-start mb-3">
+                                <span class="ac-icon"><i class="bi bi-telephone-fill"></i></span>
+                                <span>
+                                    <strong class="d-block">Phone</strong>
+                                    <a href="tel:+919171310766" class="text-decoration-none">+91 91713 10766</a>
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="support-note small text-muted">We typically respond within a few hours.</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section fade-section mt-6">
+        <div class="section-header mission-header d-flex align-items-center justify-content-center mb-3">
+            <h2 class="h4 fw-semibold mb-0 text-center">Our Mission</h2>
+        </div>
+        <div class="mission-text-wrapper fade-left">
+            <p class="section-text">We help farmers achieve better, organic‑leaning plant growth without pesticides. Our solutions reduce chemical dependency, protect crops sustainably, and improve productivity through practical, field‑tested tools.</p>
+            <p class="section-text mb-0">From solar insect traps to plasma‑treated water and custom designs, we tailor solutions to your crop, pest profile, and local conditions.</p>
+        </div>
+    </section>
+
+    <!-- What We Offer -->
+    <section class="fade-section mt-4 mt-md-6">
+        <div class="section-header d-flex align-items-center justify-content-center mb-3">
+            <h2 class="h4 fw-semibold mb-0 text-center">What We Offer</h2>
+        </div>
+        <div class="row g-3 choose-grid">
+            <div class="col-md-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-sun"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Solar‑Powered Pest Management</h3>
+                    <p class="small text-muted mb-0">Engineered, solar‑powered systems that attract and capture pest insects, helping reduce dependence on chemical interventions while maintaining farm safety and efficiency.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-bug"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Targeted Attraction Systems</h3>
+                    <p class="small text-muted mb-0">Species‑specific attraction solutions that support monitoring and reduction strategies—ideal for integrated pest management (IPM) and minimizing chemical sprays.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-diagram-3"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Custom Design & Manufacturing</h3>
+                    <p class="small text-muted mb-0">End‑to‑end engineering for agriculture solutions—requirements capture, prototyping, field validation, and scaled production tailored to crop, region, and budget.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Approach -->
+    <section class="fade-section mt-4 mt-md-6">
+        <div class="section-header d-flex align-items-center justify-content-center mb-3">
+            <h2 class="h4 fw-semibold mb-0 text-center">Our Approach</h2>
+        </div>
+        <div class="mission-text-wrapper fade-left">
+            <p class="section-text">We follow a consultative, data‑driven process: assess crop and pest context, select appropriate trap and lure combinations, define deployment density, and train farm teams for maintenance and observation.</p>
+            <p class="section-text mb-0">This pragmatic methodology ensures measurable outcomes: lower pesticide use, improved plant health, and more resilient farm ecosystems.</p>
+        </div>
+    </section>
+
+    <!-- Quality & Reliability -->
+    <section class="fade-section mt-4 mt-md-6">
+        <div class="section-header d-flex align-items-center justify-content-center mb-3">
+            <h2 class="h4 fw-semibold mb-0 text-center">Quality & Reliability</h2>
+        </div>
+        <div class="row g-3 choose-grid">
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-shield-check"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Field‑Tested Designs</h3>
+                    <p class="small text-muted mb-0">Solutions proven on farms with iterative improvements informed by real‑world feedback.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-tools"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Robust Manufacturing</h3>
+                    <p class="small text-muted mb-0">Durable materials, reliable components, and careful assembly to withstand field conditions.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-people"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">After‑Sales Support</h3>
+                    <p class="small text-muted mb-0">Guidance for deployment, maintenance, and impact tracking to keep performance consistent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Get Started CTA -->
+    <section class="values-section fade-section mt-4 mt-md-5 get-started-cta">
+        <div class="section-header d-flex align-items-center mb-3">
+            <h2 class="h4 fw-semibold mb-0">Get Started</h2>
+        </div>
+        <p class="section-text">Share your crop, acreage, key pest challenges, and preferred timeline. We’ll propose an integrated, pesticide‑free solution—combining traps, lures, and plasma‑treated water where suitable—along with deployment guidance and cost options.</p>
+        <div class="d-flex gap-2 mt-3 flex-column flex-md-row">
+            <a href="/contact" class="btn btn-primary"><i class="bi bi-envelope"></i> Contact Us</a>
+            <a href="/products" class="btn btn-outline-primary"><i class="bi bi-grid-3x3-gap-fill"></i> Explore Products</a>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="choose-section fade-section mt-6">
+        <div class="section-header d-flex align-items-center justify-content-center mb-3">
+            <h2 class="h4 fw-semibold mb-0 text-center">Why Choose Us</h2>
+        </div>
+        <div class="row g-3 choose-grid">
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-graph-up"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Outcome‑Driven</h3>
+                    <p class="small text-muted mb-0">We focus on measurable reductions in pesticide use, improving plant health and resilience.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-person-check"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Consultative Expertise</h3>
+                    <p class="small text-muted mb-0">Requirements‑led assessments, clear deployment plans, and training for farm teams.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-shield-check"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Reliable & Tested</h3>
+                    <p class="small text-muted mb-0">Solutions validated in the field, designed for durability and consistent performance.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-diagram-3"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Tailored Solutions</h3>
+                    <p class="small text-muted mb-0">Engineered to fit crop needs, local conditions, and budget—without product promotion in this section.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-people"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Support & Guidance</h3>
+                    <p class="small text-muted mb-0">After‑sales assistance for deployment, maintenance, and impact tracking.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="choose-item shadow-sm slide-up">
+                    <div class="ci-icon"><i class="bi bi-tree-fill"></i></div>
+                    <h3 class="h6 fw-semibold mb-1">Sustainability First</h3>
+                    <p class="small text-muted mb-0">Pesticide‑free philosophy supporting healthier produce and long‑term soil ecology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values / Promise Section -->
+    <section class="values-section fade-section mt-5">
+        <div class="section-header d-flex align-items-center mb-3">
+            <h2 class="h4 fw-semibold mb-0">Our Promise</h2>
+        </div>
+        <p class="section-text">We prioritize sustainable agriculture. Expect honest guidance, practical tools, and custom builds that reduce pesticides, protect biodiversity, and support resilient, organic‑leaning plant growth.</p>
+    </section>
+</main>
+
+<script>
+// Lightweight scroll animation (no external lib)
+document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('in-view');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.18 });
+    document.querySelectorAll('.fade-section, .slide-up, .fade-left, .scale-in').forEach(el => observer.observe(el));
+});
+</script>
 
 <%- include('../partials/footer') %>
 

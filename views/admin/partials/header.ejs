@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/admin/dashboard">
+            <a class="navbar-brand" href="<%= baseUrl %>/dashboard">
                 <img src="/logo/Logo.png" alt="Tushar Electronics" height="30" class="me-2" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
                 <span style="display:none;"><i class="bi bi-gear"></i> Tushar Electronics Admin</span>
             </a>
@@ -23,32 +23,32 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/dashboard">
+                        <a class="nav-link" href="<%= baseUrl %>/dashboard">
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/products">
+                        <a class="nav-link" href="<%= baseUrl %>/products">
                             <i class="bi bi-box"></i> Products
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/categories">
+                        <a class="nav-link" href="<%= baseUrl %>/categories">
                             <i class="bi bi-tags"></i> Categories
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/inquiries">
+                        <a class="nav-link" href="<%= baseUrl %>/inquiries">
                             <i class="bi bi-envelope"></i> Inquiries
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/articles">
+                        <a class="nav-link" href="<%= baseUrl %>/articles">
                             <i class="bi bi-file-text"></i> Articles
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/banners">
+                        <a class="nav-link" href="<%= baseUrl %>/banners">
                             <i class="bi bi-image"></i> Banners
                         </a>
                     </li>
@@ -58,9 +58,29 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/logout">
-                            <i class="bi bi-box-arrow-right"></i> Logout
-                        </a>
+                                                <% if (typeof admin2faEnabled !== 'undefined' && admin2faEnabled) { %>
+                                                <div class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="twoFaMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-lock-fill text-success"></i> 2FA
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="twoFaMenu">
+                                                        <li><a class="dropdown-item" href="<%= baseUrl %>/2fa/setup">Manage 2FA</a></li>
+                                                        <li><form action="<%= baseUrl %>/2fa/disable" method="post" class="px-3"><button class="btn btn-link p-0">Disable 2FA</button></form></li>
+                                                    </ul>
+                                                </div>
+                                                <% } else { %>
+                                                <div class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="twoFaMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-lock"></i> 2FA
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="twoFaMenu">
+                                                        <li><a class="dropdown-item" href="<%= baseUrl %>/2fa/setup">Enable 2FA</a></li>
+                                                    </ul>
+                                                </div>
+                                                <% } %>
+                                                <a class="nav-link" href="<%= baseUrl %>/logout">
+                                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                                </a>
                     </li>
                 </ul>
             </div>

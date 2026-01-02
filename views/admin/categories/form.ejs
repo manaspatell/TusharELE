@@ -10,7 +10,7 @@
         <div class="alert alert-danger"><%= error %></div>
     <% } %>
 
-    <form method="POST" action="<%= category ? '/admin/categories/edit/' + category._id : '/admin/categories/create' %>" 
+    <form method="POST" action="<%= category ? baseUrl + '/categories/edit/' + category._id : baseUrl + '/categories/create' %>" 
           enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-8">
@@ -74,7 +74,7 @@
             <button type="submit" class="btn btn-primary">
                 <i class="bi bi-save"></i> <%= category ? 'Update' : 'Create' %> Category
             </button>
-            <a href="/admin/categories" class="btn btn-secondary">Cancel</a>
+            <a href="<%= baseUrl %>/categories" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>

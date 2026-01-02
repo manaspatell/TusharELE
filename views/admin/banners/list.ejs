@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1><i class="bi bi-image"></i> Banners</h1>
-        <a href="/admin/banners/create" class="btn btn-primary">
+        <a href="<%= baseUrl %>/banners/create" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Add New Banner
         </a>
     </div>
@@ -22,18 +22,21 @@
                                      onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23ddd\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\'%3EImage Not Found%3C/text%3E%3C/svg%3E'; this.style.backgroundColor='#f0f0f0';">
                                 <small class="d-block text-muted mt-1" style="word-break: break-all; font-size: 0.7rem;"><%= banner.image %></small>
                                 <div class="card-body">
-                                    <h5><%= banner.title %></h5>
-                                    <p class="text-muted"><%= banner.subtitle %></p>
                                     <p>
                                         <span class="badge bg-<%= banner.status === 'active' ? 'success' : 'secondary' %>">
                                             <%= banner.status %>
                                         </span>
                                     </p>
+                                    <% if (banner.link) { %>
+                                        <p class="mb-2">
+                                            <a href="<%= banner.link %>" target="_blank" class="btn btn-sm btn-outline-primary">Shop Now (Link)</a>
+                                        </p>
+                                    <% } %>
                                     <div class="btn-group w-100">
-                                        <a href="/admin/banners/edit/<%= banner._id %>" class="btn btn-sm btn-primary">
+                                        <a href="<%= baseUrl %>/banners/edit/<%= banner._id %>" class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>
-                                        <form action="/admin/banners/delete/<%= banner._id %>" method="POST" 
+                                        <form action="<%= baseUrl %>/banners/delete/<%= banner._id %>" method="POST" 
                                               style="display: inline; flex: 1;" 
                                               onsubmit="return confirm('Are you sure?')">
                                             <button type="submit" class="btn btn-sm btn-danger w-100">

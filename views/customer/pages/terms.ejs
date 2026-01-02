@@ -1,20 +1,62 @@
-<%- include('../partials/header', { title: 'Terms & Conditions' }) %>
-
+<%- include('../partials/header', { title: 'Terms of Service', canonical: 'https://tusharagro.com/terms' }) %>
 <div class="container my-5">
-    <h1 class="mb-4">Terms & Conditions</h1>
-    <div class="row">
-        <div class="col-md-10">
-            <p><strong>Last Updated:</strong> <%= new Date().toLocaleDateString() %></p>
-            <h3>1. Acceptance of Terms</h3>
-            <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
-            <h3>2. Use License</h3>
-            <p>Permission is granted to temporarily view the materials on Tushar Electronics' website for personal, non-commercial transitory viewing only.</p>
-            <h3>3. Product Information</h3>
-            <p>We strive to provide accurate product information, but we do not warrant that product descriptions or other content on this site is accurate, complete, or error-free.</p>
-            <h3>4. Pricing</h3>
-            <p>All prices are subject to change without notice. We reserve the right to modify prices at any time.</p>
-            <h3>5. Contact</h3>
-            <p>For questions about these Terms & Conditions, please contact us at tusharelectronics8439@gmail.com</p>
+  <h1>Terms of Service</h1>
+  <p>By using this website, you agree to the following terms and conditions:</p>
+  <ul>
+    <li>Use the site lawfully and respectfully.</li>
+    <li>Do not misuse or attempt to harm the website or its users.</li>
+    <li>All content is for informational purposes only and may change without notice.</li>
+    <li>We reserve the right to refuse service or terminate accounts at our discretion.</li>
+  </ul>
+  <h2>Contact</h2>
+  <p>If you have questions about these terms, contact us at <a href="mailto:info@tusharagro.com">info@tusharagro.com</a>.</p>
+</div>
+<%- include('../partials/footer') %><%- include('../partials/header', { title: 'Terms & Conditions' }) %>
+
+<div class="container py-5">
+    <div class="text-center mb-5 fade-in-up">
+        <div class="icon-badge primary mb-3"><i class="bi bi-file-earmark-text"></i></div>
+        <h1 class="display-6 fw-semibold">Terms & Conditions</h1>
+        <p class="lead text-muted mb-0">Your agreement with Tushar Electronics for using our website and services.</p>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+        <div class="col-12 fade-in-up" style="animation-delay:.05s;">
+            <div class="h-100 shadow-sm premium-card glass">
+                <div class="card-inner">
+                    <p class="small text-muted mb-4"><strong>Last Updated:</strong> <%= new Date().toLocaleDateString() %></p>
+
+                    <div class="mb-4">
+                        <div class="icon-badge accent mb-2"><i class="bi bi-check2-circle"></i></div>
+                        <h2 class="h5 fw-semibold mb-2">1. Acceptance of Terms</h2>
+                        <p class="text-muted small mb-0">By accessing and using this website, you accept and agree to be bound by these Terms & Conditions.</p>
+                    </div>
+
+                    <div class="mb-4 slide-in-field" style="animation-delay:.1s;">
+                        <div class="icon-badge primary mb-2"><i class="bi bi-key"></i></div>
+                        <h3 class="h6 fw-semibold mb-2">2. Use License</h3>
+                        <p class="text-muted small mb-0">Permission is granted to temporarily view the materials on Tushar Electronics' website for personal, non‑commercial transitory viewing only.</p>
+                    </div>
+
+                    <div class="mb-4 slide-in-field" style="animation-delay:.15s;">
+                        <div class="icon-badge primary mb-2"><i class="bi bi-box-seam"></i></div>
+                        <h3 class="h6 fw-semibold mb-2">3. Product Information</h3>
+                        <p class="text-muted small mb-0">We strive to provide accurate product information, but we do not warrant that product descriptions or other content is accurate, complete, or error‑free.</p>
+                    </div>
+
+                    <div class="mb-4 slide-in-field" style="animation-delay:.2s;">
+                        <div class="icon-badge primary mb-2"><i class="bi bi-currency-rupee"></i></div>
+                        <h3 class="h6 fw-semibold mb-2">4. Pricing</h3>
+                        <p class="text-muted small mb-0">All prices are subject to change without notice. We reserve the right to modify prices at any time.</p>
+                    </div>
+
+                    <div class="mb-2 slide-in-field" style="animation-delay:.25s;">
+                        <div class="icon-badge primary mb-2"><i class="bi bi-envelope-fill"></i></div>
+                        <h3 class="h6 fw-semibold mb-2">5. Contact</h3>
+                        <p class="text-muted small mb-0">For questions about these Terms & Conditions, contact us at <a href="mailto:tusharelectronics8439@gmail.com" class="text-decoration-none">tusharelectronics8439@gmail.com</a>.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

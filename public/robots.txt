@@ -1,7 +1,10 @@
 User-agent: *
 Allow: /
+
 Disallow: /admin/
+Disallow: /admin-tushar-ele-8429/
 Disallow: /api/
 
-Sitemap: https://tusharelectronics.com/sitemap.xml
+Sitemap: https://tusharagro.com/sitemap.xml
+
 

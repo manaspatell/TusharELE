@@ -1,20 +1,36 @@
-<%- include('partials/header', { title: 'Home' }) %>
+<%- include('partials/header', {
+    title: 'Home',
+    isHome: true,
+    metaDescription: 'Tushar Electronics - Custom insect trap manufacturing, sustainable agriculture solutions, and bulk orders. Shop categories, products, and read our blog.',
+    metaKeywords: 'insect traps, agriculture, bulk manufacturing, categories, products, blog',
+    canonical: 'https://tusharagro.com/'
+}) %>
+<!-- JSON-LD: Homepage -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Tushar Electronics",
+    "url": "https://tusharagro.com/",
+    "description": "Tushar Electronics - Custom insect trap manufacturing, sustainable agriculture solutions, and bulk orders.",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tusharagro.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
 
 <!-- Hero Slider -->
 <% if (banners && banners.length > 0) { %>
 <div class="container my-4">
 
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500" data-bs-pause="hover">
 
         <!-- Indicators -->
         <div class="carousel-indicators">
             <% banners.forEach((banner, index) => { %>
-                <button type="button"
-                    data-bs-target="#heroCarousel"
-                    data-bs-slide-to="<%= index %>"
-                    class="<%= index === 0 ? 'active' : '' %>"
-                    aria-current="<%= index === 0 ? 'true' : 'false' %>"
-                    aria-label="Slide <%= index + 1 %>"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 ? 'true' : 'false' %>" aria-label="Slide <%= index + 1 %>"></button>
             <% }); %>
         </div>
 
@@ -22,75 +38,47 @@
         <div class="carousel-inner">
             <% banners.forEach((banner, index) => { %>
                 <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                    <img src="<%= banner.image %>" class="d-block w-100 hero-slider-img" alt="<%= banner.title %>">
-
-                    <!-- Transparent caption box -->
-                    <div class="carousel-caption hero-caption">
-                        <h2 class="banner-title"><%= banner.title %></h2>
-                        <% if (banner.subtitle) { %>
-                            <p class="banner-subtitle"><%= banner.subtitle %></p>
-                        <% } %>
-                        <% if (banner.link) { %>
-                            <a href="<%= banner.link %>" class="btn btn-primary btn-lg">Shop Now</a>
-                        <% } %>
-                    </div>
+                    <% const imgSrc = banner.image || banner.src || '/logo/Logo1.png'; %>
+                    <% if (banner.link) { %>
+                        <a href="<%= banner.link %>">
+                            <img src="<%= imgSrc %>" class="d-block w-100" alt="<%= banner.title || 'Banner' %>" decoding="async" <%= index === 0 ? 'loading="eager"' : 'loading="lazy"' %> >
+                        </a>
+                    <% } else { %>
+                        <img src="<%= imgSrc %>" class="d-block w-100" alt="<%= banner.title || 'Banner' %>" decoding="async" <%= index === 0 ? 'loading="eager"' : 'loading="lazy"' %> >
+                    <% } %>
+                    <!-- Banner caption removed per user request (no text overlay needed) -->
                 </div>
             <% }); %>
         </div>
 
-        <!-- Controls -->
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
-
         <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
 
     </div>
 </div>
 <% } %>
+    
+            
 
 
-<!-- Trust Badges Section -->
-<div class="container my-4">
-    <div class="row g-3 justify-content-center">
-        <div class="col-md-3 col-sm-6">
-            <div class="trust-badge animate-fade-in" style="animation-delay: 0.1s;">
-                <i class="bi bi-shield-lock-fill trust-icon-secure"></i>
 
-                <span>Secure Payment</span>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="trust-badge animate-fade-in" style="animation-delay: 0.2s;">
-                <i class="bi bi-truck"></i>
-                <span>Free Shipping</span>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="trust-badge animate-fade-in" style="animation-delay: 0.3s;">
-                <i class="bi bi-arrow-counterclockwise"></i>
-                <span>Easy Returns</span>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="trust-badge animate-fade-in" style="animation-delay: 0.4s;">
-                <i class="bi bi-headset"></i>
-                <span>24/7 Support</span>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="container my-5">
+    <div class="home-sections">
     <!-- Categories -->
     <section class="mb-5 category-section">
-        <h2 class="text-center mb-4"><i class="bi bi-grid-3x3-gap-fill me-2" style="color: #4A90E2;"></i>Shop by Category</h2>
-        <div class="row g-4">
+        <h2 class="section-title shop-by-category-title text-center mb-4"><i class="bi bi-grid-3x3-gap-fill me-2" style="color: #4A90E2;"></i>Shop by Category</h2>
+        <!-- Final category slider: remove Bootstrap row/track wrappers -->
+        <div class="category-slider">
             <% if (categories && categories.length > 0) { %>
                 <% categories.forEach(category => { %>
-                    <div class="col-md-3 col-sm-6">
                         <div class="card category-card h-100 shadow-sm">
                             <a href="/category/<%= category.slug %>" class="text-decoration-none">
                                 <div class="image-container">
@@ -108,7 +96,6 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
                 <% }); %>
             <% } else { %>
                 <div class="col-12 text-center">
@@ -116,57 +103,125 @@
                 </div>
             <% } %>
         </div>
+        <!-- Mobile-only swipe instruction below the cards -->
+        <div class="category-swipe-hint d-md-none mt-2" aria-hidden="false">
+            <div class="csh-pill" role="note" aria-label="Swipe to see more categories">
+                <div class="csh-icons">
+                    <span class="hand" aria-hidden="true">
+                        <i class="bi bi-hand-index-thumb-fill"></i>
+                        <span class="tap-ring" aria-hidden="true"></span>
+                    </span>
+                    <span class="chevrons" aria-hidden="true">
+                        <i class="bi bi-chevron-right"></i>
+                        <i class="bi bi-chevron-right"></i>
+                        <i class="bi bi-chevron-right"></i>
+                    </span>
+                </div>
+                <div class="csh-text">
+                    <span class="csh-title">Swipe to explore</span>
+                    <span class="csh-sub">More categories on the right</span>
+                </div>
+                <span class="csh-shimmer" aria-hidden="true"></span>
+            </div>
+            <div class="csh-confetti" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
     </section>
 
-    <!-- Featured Products -->
+    <!-- Custom Design & Manufacturing (Bulk Orders) -->
+    <section class="mb-5" id="custom-design">
+        <h2 class="section-title text-center mb-4"><i class="bi bi-tools me-2" style="color:#0ea5a4;"></i>Custom Design & Manufacturing</h2>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- Three.js background canvas for subtle motion -->
+                <canvas id="customDesignBG" aria-hidden="true" style="position:absolute; inset:0; z-index:0; pointer-events:none;"></canvas>
+                <div class="text-center">
+                    <p class="text-muted mb-3">We offer custom design and manufacturing for bulk orders. Call us to discuss specifications, quantities, pricing, and timelines.</p>
+                    <a href="tel:+919171310766" class="btn btn-primary btn-lg"><i class="bi bi-telephone-fill me-1"></i> Call Us: +91 9171310766</a>
+                </div>
+                <hr class="my-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h6 class="fw-semibold"><i class="bi bi-list-check me-1" style="color:#4A90E2;"></i>What we can customize</h6>
+                        <ul class="text-muted small mb-0">
+                            <li>We can manufacture different types of insect traps as per customer requirements (solar, pheromone/lure, sticky, etc.).</li>
+                            <li>Custom trap dimensions, materials, and finishes</li>
+                            <li>Branding: labels, packaging, logo placement</li>
+                            <li>Electrical specs and connectors for solar/LED where applicable</li>
+                            <li>Quality testing available</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-semibold"><i class="bi bi-exclamation-triangle-fill me-1" style="color:#F7A400;"></i>Conditions (bulk only)</h6>
+                        <ul class="text-muted small mb-0">
+                            <li>Minimum quantity: 100–200 units per week (varies by product)</li>
+                            <li>Lead time: 2–6 weeks after design confirmation and advance payment</li>
+                            <li>Payment terms: advance + milestone-based; pricing depends on specs</li>
+                            <li>Prototype mandatory before mass production to validate design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page-specific Three.js init -->
+    <script src="/js/custom-design-three.js"></script>
+
+    <!-- Featured Products (responsive: grid on mobile, desktop unchanged) -->
     <section class="mb-5 product-section">
-        <h2 class="text-center mb-4"><i class="bi bi-star-fill me-2" style="color: #FFD700;"></i>Featured Products</h2>
-        <div class="row g-4">
+        <h2 class="section-title featured-products-title text-center mb-4"><i class="bi bi-star-fill me-2" style="color: #FFD700;"></i>Featured Products</h2>
+
+        <!-- Wrapper: uses grid on mobile (2×2) and natural flow on desktop -->
+        <div class="featured-products-wrapper featured-grid">
             <% if (featuredProducts && featuredProducts.length > 0) { %>
                 <% featuredProducts.forEach(product => { %>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="card product-card h-100 shadow-sm position-relative">
-                            <% if (product.discount && product.discount.enabled && product.discount.percentage > 0) { %>
-                                <div class="discount-badge"><%= product.discount.percentage %>% OFF</div>
-                            <% } %>
-                            <a href="/product/<%= product.slug %>">
-                                <div class="image-container">
-                                    <% 
-                                    let productImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23ddd"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999"%3ENo Image%3C/text%3E%3C/svg%3E';
-                                    if (product.images && product.images.length > 0 && product.images[0]) {
-                                        productImage = product.images[0];
-                                    }
-                                    %>
-                                    <img src="<%= productImage %>" 
-                                         class="card-img-top" 
-                                         alt="<%= product.name %>"
-                                         loading="lazy"
-                                         onload="if(this && this.classList) this.classList.add('loaded')"
-                                         onerror="if(this) { this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23ddd\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\'%3ENo Image%3C/text%3E%3C/svg%3E'; this.style.backgroundColor='#f0f0f0'; if(this.classList) this.classList.add('loaded'); }">
-                                </div>
-                            </a>
-                            <div class="card-body">
-                                <h6 class="card-title">
-                                    <a href="/product/<%= product.slug %>" class="text-decoration-none text-dark">
-                                        <%= product.name %>
-                                    </a>
-                                </h6>
-                                <div class="mb-2">
-                                    <% 
-                                    let finalPrice = product.price;
-                                    if (product.discount && product.discount.enabled && product.discount.percentage > 0) {
-                                        finalPrice = product.price * (1 - product.discount.percentage / 100);
-                                    %>
-                                        <span class="price-original">₹<%= product.price.toLocaleString() %></span>
-                                        <span class="price-discounted">₹<%= Math.round(finalPrice).toLocaleString() %></span>
-                                    <% } else { %>
-                                        <span class="price-discounted">₹<%= product.price.toLocaleString() %></span>
-                                    <% } %>
-                                </div>
-                                <button class="btn btn-inquiry btn-sm w-100" data-product-id="<%= product._id %>" data-product-name="<%= product.name %>" data-action="inquiry">
-                                    <i class="bi bi-envelope-fill me-1"></i> Send Inquiry
-                                </button>
+                    <div class="product-card card h-100 shadow-sm position-relative">
+                        <% if (product.discount && product.discount.enabled && product.discount.percentage > 0) { %>
+                            <div class="discount-badge"><%= product.discount.percentage %>% OFF</div>
+                        <% } %>
+
+                        <a href="/product/<%= product.slug %>">
+                            <div class="image-container">
+                                <% 
+                                let productImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23ddd"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999"%3ENo Image%3C/text%3E%3C/svg%3E';
+                                if (product.images && product.images.length > 0 && product.images[0]) {
+                                    productImage = product.images[0];
+                                }
+                                %>
+                                <img src="<%= productImage %>" 
+                                     class="card-img-top" 
+                                     alt="<%= product.name %>"
+                                     loading="lazy"
+                                     onload="if(this && this.classList) this.classList.add('loaded')"
+                                     onerror="if(this) { this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23ddd\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\'%3ENo Image%3C/text%3E%3C/svg%3E'; this.style.backgroundColor='#f0f0f0'; if(this.classList) this.classList.add('loaded'); }">
                             </div>
+                        </a>
+
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <a href="/product/<%= product.slug %>" class="text-decoration-none text-dark">
+                                    <%= product.name %>
+                                </a>
+                            </h6>
+
+                            <div class="mb-2">
+                                <% 
+                                let finalPrice = product.price;
+                                if (product.discount && product.discount.enabled && product.discount.percentage > 0) {
+                                    finalPrice = product.price * (1 - product.discount.percentage / 100);
+                                %>
+                                    <span class="price-original">₹<%= product.price.toLocaleString() %></span>
+                                    <span class="price-discounted">₹<%= Math.round(finalPrice).toLocaleString() %></span>
+                                <% } else { %>
+                                    <span class="price-discounted">₹<%= product.price.toLocaleString() %></span>
+                                <% } %>
+                            </div>
+
+                            <button class="btn btn-inquiry btn-sm w-100" data-product-id="<%= product._id %>" data-product-name="<%= product.name %>" data-action="inquiry">
+                                <i class="bi bi-envelope-fill me-1"></i> Send Inquiry
+                            </button>
                         </div>
                     </div>
                 <% }); %>
@@ -177,14 +232,46 @@
             <% } %>
         </div>
     </section>
+    </div>
+
+   <!-- Trust Badges Section -->
+    <div class="container my-4 trust-badges-wrapper">
+        <div class="row g-3 justify-content-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="trust-badge">
+                    <i class="bi bi-shield-check trust-icon-secure" aria-hidden="true"></i>
+                    <span>Secure Payment</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="trust-badge">
+                    <i class="bi bi-truck"></i>
+                    <span>Fast Delivery</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="trust-badge">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    <span>Easy Returns</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="trust-badge">
+                    <i class="bi bi-headset"></i>
+                    <span>24/7 Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Latest Articles -->
     <% if (latestArticles && latestArticles.length > 0) { %>
         <section class="mb-5">
             <h2 class="text-center mb-4"><i class="bi bi-journal-text me-2" style="color: #E74C3C;"></i>Latest Articles</h2>
-            <div class="row g-4">
+            <!-- Swipeable articles slider (mobile) / grid (desktop) -->
+            <div class="article-slider">
                 <% latestArticles.forEach(article => { %>
-                    <div class="col-md-4">
+                    <div class="article-slide">
                         <div class="card h-100 shadow-sm article-card">
                             <div class="article-image-container <%= !article.image ? 'no-image' : '' %>">
                                 <% if (article.image) { %>
@@ -215,6 +302,7 @@
             </div>
         </section>
     <% } %>
+    <!-- Condensed Trust Badges removed -->
 
     <!-- Why Choose Us Section -->
     <section class="mb-5 why-choose-section">
@@ -224,7 +312,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="feature-box text-center">
                         <div class="feature-icon">
-                            <i class="bi bi-shield-check-fill"></i>
+                            <i class="bi bi-shield-check"></i>
                         </div>
                         <h5>Authentic Products</h5>
                         <p class="text-muted">100% genuine products with warranty</p>
@@ -287,25 +375,7 @@
         </section>
     <% } %>
 
-    <!-- Newsletter Section -->
-    <section class="mb-5 newsletter-section">
-        <div class="container">
-            <div class="newsletter-box">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <h3><i class="bi bi-envelope-paper-fill me-2"></i>Subscribe to Our Newsletter</h3>
-                        <p class="text-muted mb-0">Get the latest deals and updates delivered to your inbox</p>
-                    </div>
-                    <div class="col-md-6">
-                        <form class="d-flex gap-2">
-                            <input type="email" class="form-control" placeholder="Enter your email" required>
-                            <button type="submit" class="btn btn-primary">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 </div>
 
 <!-- Inquiry Modal -->
@@ -329,8 +399,8 @@
                         <input type="tel" class="form-control" name="phone" required placeholder="Enter your number here">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Gmail Email *</label>
-                        <input type="email" class="form-control" name="email" required placeholder="yourname@gmail.com">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-control" name="email" required placeholder="you@example.com">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Product Name</label>
@@ -355,106 +425,29 @@
 </div>
 
 <script>
-// Initialize Banner Carousel - Fully Functional
+    // Carousel speed/acceleration handled via CSS for smoother transitions
+// Initialize Banner Carousel - lean bootstrap setup
 (function() {
-    let carouselInstance = null;
-    
     function initCarousel() {
-        const carouselElement = document.querySelector('#heroCarousel');
-        if (!carouselElement) {
-            return;
-        }
-        
-        // Check if Bootstrap is loaded
-        if (typeof bootstrap === 'undefined' || !bootstrap.Carousel) {
-            setTimeout(initCarousel, 100);
-            return;
-        }
-        
-        try {
-            const items = carouselElement.querySelectorAll('.carousel-item');
-            if (items.length === 0) {
-                console.warn('No carousel items found');
-                return;
-            }
-            
-            // Dispose existing instance if any
-            const existing = bootstrap.Carousel.getInstance(carouselElement);
-            if (existing) {
-                existing.dispose();
-            }
-            
-            // Create new carousel instance with proper settings
-            carouselInstance = new bootstrap.Carousel(carouselElement, {
-                interval: 2000,
-                ride: false,
-                wrap: true,
-                pause: 'hover',
-                keyboard: true,
-                touch: true
-            });
-            
-            // Start auto-sliding
-            carouselInstance.cycle();
-            
-            // Ensure controls are clickable - Remove old listeners and add new ones
-            let prevBtn = carouselElement.querySelector('.carousel-control-prev');
-            let nextBtn = carouselElement.querySelector('.carousel-control-next');
-            
-            // Remove existing listeners by cloning
-            if (prevBtn) {
-                const newPrevBtn = prevBtn.cloneNode(true);
-                prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
-                prevBtn = newPrevBtn; // Update reference
-                newPrevBtn.setAttribute('data-bs-slide', 'prev');
-                newPrevBtn.setAttribute('data-bs-target', '#heroCarousel');
-                newPrevBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    if (carouselInstance) {
-                        carouselInstance.prev();
-                    }
-                }, true);
-            }
-            
-            if (nextBtn) {
-                const newNextBtn = nextBtn.cloneNode(true);
-                nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
-                nextBtn = newNextBtn; // Update reference
-                newNextBtn.setAttribute('data-bs-slide', 'next');
-                newNextBtn.setAttribute('data-bs-target', '#heroCarousel');
-                newNextBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    if (carouselInstance) {
-                        carouselInstance.next();
-                    }
-                }, true);
-            }
-            
-            console.log('✅ Carousel initialized with', items.length, 'banners');
-            console.log('✅ Navigation arrows enabled');
-            
-        } catch (error) {
-            console.error('Error initializing carousel:', error);
-        }
-    }
-    
-    // Initialize when ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(initCarousel, 300);
+        const el = document.querySelector('#heroCarousel');
+        if (!el || typeof bootstrap === 'undefined' || !bootstrap.Carousel) return;
+        const existing = bootstrap.Carousel.getInstance(el);
+        if (existing) existing.dispose();
+        const instance = new bootstrap.Carousel(el, {
+            interval: 2500,
+            wrap: true,
+            pause: 'hover',
+            keyboard: true,
+            touch: true
         });
-    } else {
-        setTimeout(initCarousel, 300);
+        instance.cycle();
     }
-    
-    // Backup initialization after page load
-    window.addEventListener('load', function() {
-        setTimeout(initCarousel, 400);
-    });
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCarousel);
+    } else {
+        initCarousel();
+    }
+    window.addEventListener('load', initCarousel);
 })();
 
 // Image loading handler and animations
@@ -587,19 +580,51 @@ document.getElementById('inquiryForm')?.addEventListener('submit', async (e) => 
         alert('❌ Failed to send inquiry. Please try again or call us directly at +91 9171310766');
     }
 });
-document.addEventListener("DOMContentLoaded", function () {
-    const myCarousel = document.querySelector('#heroCarousel');
-    if (myCarousel) {
-        new bootstrap.Carousel(myCarousel, {
-            interval: 3000,
-            ride: 'carousel',
-            pause: 'hover',
-            wrap: true
-        });
-    }
-});
+/* Duplicate init removed: handled above by robust initializer */
 
 </script>
 
 <%- include('partials/footer') %>
+
+<script>
+// Randomized, on-scroll animations for homepage cards (featured products + categories)
+document.addEventListener('DOMContentLoaded', function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const selectors = [
+        '.home-sections .featured-products-wrapper > .product-card',
+        '.category-slider > .card.category-card',
+        '.article-slider .article-card',
+        '.testimonials-section .testimonial-card',
+        '.why-choose-section .feature-box',
+        '.trust-badges-wrapper .trust-badge'
+    ];
+    const cards = document.querySelectorAll(selectors.join(','));
+    if (!cards.length) return;
+
+    const variants = ['left','right','up','down','zoom','tilt'];
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                // preflight will-change shortly before anim to avoid long-lived cost
+                el.style.willChange = 'transform, opacity';
+                const idx = Number(el.dataset.seq) || 0;
+                const delaySec = ( (idx % 8) * 0.06 + Math.random() * 0.08 );
+                el.style.animationDelay = delaySec.toFixed(2) + 's';
+                el.classList.add('in');
+                el.addEventListener('animationend', () => { el.style.willChange = 'auto'; }, { once: true });
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+
+    cards.forEach((el, i) => {
+        const variant = variants[Math.floor(Math.random() * variants.length)];
+        el.classList.add('pp-anim');
+        el.dataset.anim = variant;
+        el.dataset.seq = i;
+        io.observe(el);
+    });
+});
+</script>
 

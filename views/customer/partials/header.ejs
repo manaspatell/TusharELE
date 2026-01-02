@@ -3,28 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tushar Electronics - Your trusted source for quality electronics including TVs, ACs, Washing Machines and more. Best prices, authentic products, expert support.">
-    <meta name="keywords" content="Tushar Electronics, electronics, TV, AC, washing machine, refrigerator, electronics store, online electronics, best electronics prices">
-    <meta name="author" content="Tushar Electronics">
+    <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Tushar Electronics - Quality insect traps and sustainable solutions. Call for bulk orders.' %>">
+    <meta name="keywords" content="<%= typeof metaKeywords !== 'undefined' ? metaKeywords : 'insect traps, solar insect trap, lure trap, bulk manufacturing, Tushar Electronics' %>">
+    <meta name="author" content="Tushar Agro">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
     <meta name="revisit-after" content="7 days">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= typeof siteUrl !== 'undefined' ? siteUrl : 'https://tusharelectronics.com' %>">
-    <meta property="og:title" content="<%= typeof title !== 'undefined' ? title + ' - ' : '' %>Tushar Electronics">
-    <meta property="og:description" content="Tushar Electronics - Your trusted source for quality electronics including TVs, ACs, Washing Machines and more.">
-    <meta property="og:image" content="/logo/Logo1.png">
+    <meta property="og:type" content="<%= typeof ogType !== 'undefined' ? ogType : 'website' %>">
+    <meta property="og:url" content="<%= typeof ogUrl !== 'undefined' ? ogUrl : (typeof canonical !== 'undefined' ? canonical : (typeof siteUrl !== 'undefined' ? siteUrl : 'https://tusharagro.com')) %>">
+    <meta property="og:title" content="<%= typeof ogTitle !== 'undefined' ? ogTitle : ((typeof title !== 'undefined' ? title + ' - ' : '') + 'Tushar Electronics') %>">
+    <meta property="og:site_name" content="tusharagro.com">
+    <meta property="og:description" content="<%= typeof ogDescription !== 'undefined' ? ogDescription : (typeof metaDescription !== 'undefined' ? metaDescription : 'Tushar Electronics - Quality insect traps and sustainable solutions.') %>">
+    <meta property="og:image" content="<%= typeof ogImage !== 'undefined' ? ogImage : '/logo/Logo1.png' %>">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="<%= typeof siteUrl !== 'undefined' ? siteUrl : 'https://tusharelectronics.com' %>">
+    <meta property="twitter:url" content="<%= typeof canonical !== 'undefined' ? canonical : (typeof siteUrl !== 'undefined' ? siteUrl : 'https://tusharagro.com') %>">
     <meta property="twitter:title" content="<%= typeof title !== 'undefined' ? title + ' - ' : '' %>Tushar Electronics">
-    <meta property="twitter:description" content="Tushar Electronics - Your trusted source for quality electronics including TVs, ACs, Washing Machines and more.">
+    <meta property="twitter:description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Tushar Electronics - Quality insect traps and sustainable solutions.' %>">
     <meta property="twitter:image" content="/logo/Logo1.png">
     
-    <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Tushar Electronics</title>
+        <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Tushar Electronics</title>
+        <% if (typeof canonical !== 'undefined') { %>
+            <link rel="canonical" href="<%= canonical.replace('tusharelectronics.example', 'tusharagro.com') %>">
+        <% } %>
     <!-- Favicon - Using Logo1.png -->
     <link rel="icon" type="image/png" sizes="192x192" href="/logo/Logo1.png?v=3">
     <link rel="icon" type="image/png" sizes="32x32" href="/logo/Logo1.png?v=3">
@@ -32,24 +36,47 @@
     <link rel="shortcut icon" href="/logo/Logo1.png?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="/logo/Logo1.png?v=3">
     <link rel="icon" type="image/png" href="/logo/Logo1.png?v=3">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FY098GK0PT"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-FY098GK0PT');
+        </script>
+
+        <!-- Sentry Browser Error Monitoring -->
+        <script src="https://browser.sentry-cdn.com/7.110.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
+        <script>
+            Sentry.init({
+                dsn: 'https://examplePublicKey@o0.ingest.sentry.io/0', // Replace with your Sentry DSN
+                integrations: [Sentry.browserTracingIntegration()],
+                tracesSampleRate: 1.0, // Adjust for production
+            });
+        </script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=12">
+    <!-- Premium Loader styles -->
+    <link rel="stylesheet" href="/loader/style.css">
+    <!-- Removed force-desktop.css to allow responsive mobile & tablet layouts -->
+    <!-- Load Bootstrap JS early so page scripts can use `bootstrap` -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Store",
-      "name": "Tushar Electronics",
-      "description": "Your trusted source for quality electronics including TVs, ACs, Washing Machines and more",
-      "url": "<%= typeof siteUrl !== 'undefined' ? siteUrl : 'https://tusharelectronics.com' %>",
-      "logo": "<%= typeof siteUrl !== 'undefined' ? siteUrl : 'https://tusharelectronics.com' %>/logo/Logo1.png",
+        {
+            "@context": "https://schema.org",
+            "@type": "Store",
+        "name": "Tushar Electronics",
+        "description": "Custom insect trap manufacturing and sustainable solutions",
+        "url": "<%= typeof siteUrl !== 'undefined' ? siteUrl : (typeof canonical !== 'undefined' ? canonical.replace('tusharelectronics.example', 'tusharagro.com') : 'https://tusharagro.com') %>",
+        "logo": "/logo/Logo1.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+91-9171310766",
@@ -64,9 +91,32 @@
     }
     </script>
 </head>
-<body>
-    <!-- Welcome Banner -->
+<body<% if (typeof isHome !== 'undefined' && isHome) { %> class="home-page"<% } %>>
+    <!-- Premium Loader Overlay -->
+    <div id="preloader" class="preloader" aria-hidden="false" aria-label="Loading Tushar Electronics">
+        <div class="preloader-inner">
+            <div class="canvas-glow">
+                <canvas id="loaderCanvas" class="loader-canvas" aria-hidden="true"></canvas>
+                <div class="glow-ring" aria-hidden="true"></div>
+            </div>
+            <h1 class="typewriter" aria-live="polite">
+                <span class="tw-prefix">Welcome to</span>
+                <span class="tw-brand">Tushar Electronics</span>
+                <span class="tw-caret" aria-hidden="true">|</span>
+            </h1>
+            <div class="progress-wrap" aria-label="Loading Progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+        </div>
+    </div>
+    <!-- Audio removed as requested -->
+    <!-- Welcome Banner (Home page only) -->
+    <% if (typeof isHome !== 'undefined' && isHome) { %>
     <div class="welcome-banner py-3 text-center position-relative overflow-hidden">
+        <div id="welcome-bg" aria-hidden="true" style="position:absolute; inset:0; z-index:0; pointer-events:none;"></div>
         <div class="welcome-banner-pattern"></div>
         <div class="container position-relative">
             <div class="row align-items-center">
@@ -80,31 +130,52 @@
             </div>
         </div>
     </div>
+    <% } %>
 
-    <!-- Top Bar -->
-    <div class="bg-primary text-white py-2">
+    <!-- Top Bar (Home page only) -->
+    <% if (typeof isHome !== 'undefined' && isHome) { %>
+    <div class="bg-primary text-white py-1 py-md-2">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <small><i class="bi bi-envelope-fill me-1"></i> tusharelectronics8439@gmail.com</small>
+            <div class="row top-bar">
+                <div class="col-md-4 email-box d-none d-md-block">
+                    <small><i class="bi bi-envelope-fill me-1"></i> <a href="mailto:tusharelectronics8439@gmail.com" class="text-white text-decoration-none">tusharelectronics8439@gmail.com</a></small>
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-4 text-center phone-box d-none d-md-block">
                     <small class="phone-number text-white"><i class="bi bi-telephone-fill me-1"></i> <a href="tel:+919171310766" class="text-white text-decoration-none">+91 9171310766</a></small>
                 </div>
-                <div class="col-md-4 text-end">
-                    <small><i class="bi bi-truck me-1"></i> Free Shipping on Orders Above ₹5000</small>
+                <div class="col-12 col-md-4 text-end delivery-box">
+                    <small><i class="bi bi-truck me-1"></i> Reliable Delivery</small>
                 </div>
             </div>
         </div>
     </div>
+    <% } %>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <!-- Full-width Three.js navbar background canvas mount -->
+        <div id="navbar-bg" aria-hidden="true"></div>
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
                 <img src="/logo/Logo.png" alt="Tushar Electronics" height="45" class="me-2 logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
                 <span class="brand-text" style="display:none;"><i class="bi bi-lightning-charge-fill text-primary"></i> Tushar Electronics</span>
             </a>
+            <!-- Mobile search (expanded full-width on focus) -->
+            <div class="mobile-search-bar-container d-flex d-md-none align-items-center">
+                <form class="d-flex mobile-search-form w-100" action="/products" method="GET">
+                    <div class="search-container mobile-search-inner w-100">
+                        <input class="form-control form-control-sm mobile-search-input" type="search" name="search" id="searchInputMobile"
+                               placeholder="Search products..." autocomplete="off">
+                        <div id="searchSuggestionsMobile" class="search-suggestions"></div>
+                    </div>
+                    <button class="btn btn-primary btn-sm ms-1 mobile-search-submit" type="submit" aria-label="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button type="button" id="mobileSearchClose" class="btn btn-outline-secondary btn-sm ms-1 mobile-search-close d-none" aria-label="Close search">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </form>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -138,8 +209,29 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
+                    <!-- Theme toggle removed -->
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Three.js for Navbar animation (loaded once globally) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="/js/navbar-three.js"></script>
+    <script src="/js/welcome-three.js"></script>
+
+    <script>
+    // Toggle background blur and search container highlight on focus
+    document.addEventListener('DOMContentLoaded', function(){
+        const desktopInput = document.getElementById('searchInput');
+        const mobileInput = document.getElementById('searchInputMobile');
+        const toggle = (active) => document.body.classList.toggle('search-active', active);
+        [desktopInput, mobileInput].forEach(inp => {
+            if (!inp) return;
+            inp.addEventListener('focus', () => toggle(true));
+            inp.addEventListener('blur', () => toggle(false));
+        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    });
+    </script>
 

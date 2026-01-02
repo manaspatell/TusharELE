@@ -1,5 +1,12 @@
 const Article = require('../models/Article');
-const { generateSlug, truncate } = require('../utils/helpers');
+const {
+  generateSlug,
+  truncate,
+  parseTags,
+  buildUploadPath,
+  deletePublicFile,
+  buildPagination,
+} = require('../utils/helpers');
 const { sanitizeText, sanitizeHtml } = require('../middleware/validation');
 const fs = require('fs');
 const path = require('path');
@@ -9,37 +16,46 @@ exports.listAdmin = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
-    const skip = (page - 1) * limit;
+    const total = await Article.countDocuments();
+    const { skip, totalPages, currentPage } = buildPagination(
+      page,
+      limit,
+      total
+    );
 
     const articles = await Article.find()
       .sort({ created_at: -1 })
       .skip(skip)
       .limit(limit);
 
-    const total = await Article.countDocuments();
-
     res.render('admin/articles/list', {
+      baseUrl: req.baseUrl,
       articles,
-      currentPage: page,
-      totalPages: Math.ceil(total / limit),
-      total
+      currentPage,
+      totalPages,
+      total,
     });
   } catch (error) {
-    res.render('admin/articles/list', { error: 'Failed to load articles' });
+    res.render('admin/articles/list', {
+      error: 'Failed to load articles',
+      baseUrl: req.baseUrl,
+    });
   }
 };
 
 // Show create form
 exports.createForm = (req, res) => {
-  res.render('admin/articles/form', { article: null });
+  res.render('admin/articles/form', { article: null, baseUrl: req.baseUrl });
 };
 
 // Create article
 exports.create = async (req, res) => {
   try {
     const { title, content, excerpt, tags, category, status } = req.body;
-    const image = req.file ? `/uploads/articles/${req.file.filename}` : '';
-    const tagArray = tags ? tags.split(',').map(t => sanitizeText(t.trim())).filter(t => t) : [];
+    const image = req.file
+      ? buildUploadPath('articles', req.file.filename)
+      : '';
+    const tagArray = parseTags(tags, sanitizeText);
 
     const article = new Article({
       title: sanitizeText(title),
@@ -49,16 +65,17 @@ exports.create = async (req, res) => {
       image,
       tags: tagArray,
       category: sanitizeText(category || 'general'),
-      status: (status === 'published' || status === 'draft') ? status : 'draft'
+      status: status === 'published' || status === 'draft' ? status : 'draft',
     });
 
     await article.save();
-    res.redirect('/admin/articles');
+    res.redirect(`${req.baseUrl}/articles`);
   } catch (error) {
     console.error(error);
-    res.render('admin/articles/form', { 
-      article: null, 
-      error: 'Failed to create article' 
+    res.render('admin/articles/form', {
+      article: null,
+      error: 'Failed to create article',
+      baseUrl: req.baseUrl,
     });
   }
 };
@@ -67,9 +84,9 @@ exports.create = async (req, res) => {
 exports.editForm = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
-    res.render('admin/articles/form', { article });
+    res.render('admin/articles/form', { article, baseUrl: req.baseUrl });
   } catch (error) {
-    res.redirect('/admin/articles');
+    res.redirect(`${req.baseUrl}/articles`);
   }
 };
 
@@ -80,10 +97,10 @@ exports.update = async (req, res) => {
     const article = await Article.findById(req.params.id);
 
     if (!article) {
-      return res.redirect('/admin/articles');
+      return res.redirect(`${req.baseUrl}/articles`);
     }
 
-    const tagArray = tags ? tags.split(',').map(t => t.trim()) : '';
+    const tagArray = parseTags(tags);
 
     article.title = title;
     article.slug = generateSlug(title);
@@ -97,19 +114,16 @@ exports.update = async (req, res) => {
     if (req.file) {
       // Delete old image
       if (article.image) {
-        const oldPath = path.join(__dirname, '..', 'public', article.image);
-        if (fs.existsSync(oldPath)) {
-          fs.unlinkSync(oldPath);
-        }
+        deletePublicFile(article.image);
       }
-      article.image = `/uploads/articles/${req.file.filename}`;
+      article.image = buildUploadPath('articles', req.file.filename);
     }
 
     await article.save();
-    res.redirect('/admin/articles');
+    res.redirect(`${req.baseUrl}/articles`);
   } catch (error) {
     console.error(error);
-    res.redirect('/admin/articles');
+    res.redirect(`${req.baseUrl}/articles`);
   }
 };
 
@@ -117,30 +131,30 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
-    
+
     if (article) {
       // Delete image
       if (article.image) {
-        const imagePath = path.join(__dirname, '..', 'public', article.image);
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
+        deletePublicFile(article.image);
       }
-      
+
       await Article.findByIdAndDelete(req.params.id);
     }
-    
-    res.redirect('/admin/articles');
+
+    res.redirect(`${req.baseUrl}/articles`);
   } catch (error) {
-    res.redirect('/admin/articles');
+    res.redirect(`${req.baseUrl}/articles`);
   }
 };
 
 // View article (Customer)
 exports.view = async (req, res) => {
   try {
-    const article = await Article.findOne({ slug: req.params.slug, status: 'published' });
-    
+    const article = await Article.findOne({
+      slug: req.params.slug,
+      status: 'published',
+    });
+
     if (!article) {
       return res.status(404).render('customer/404');
     }
@@ -153,11 +167,10 @@ exports.view = async (req, res) => {
     const relatedArticles = await Article.find({
       _id: { $ne: article._id },
       status: 'published',
-      $or: [
-        { category: article.category },
-        { tags: { $in: article.tags } }
-      ]
-    }).limit(3).sort({ views: -1 });
+      $or: [{ category: article.category }, { tags: { $in: article.tags } }],
+    })
+      .limit(3)
+      .sort({ views: -1 });
 
     res.render('customer/pages/article', { article, relatedArticles });
   } catch (error) {
@@ -170,7 +183,6 @@ exports.list = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = 9;
-    const skip = (page - 1) * limit;
     const category = req.query.category || 'all';
 
     const query = { status: 'published' };
@@ -178,24 +190,29 @@ exports.list = async (req, res) => {
       query.category = category;
     }
 
+    const total = await Article.countDocuments(query);
+    const { skip, totalPages, currentPage } = buildPagination(
+      page,
+      limit,
+      total
+    );
     const articles = await Article.find(query)
       .sort({ created_at: -1 })
       .skip(skip)
       .limit(limit);
-
-    const total = await Article.countDocuments(query);
-    const categories = await Article.distinct('category', { status: 'published' });
+    const categories = await Article.distinct('category', {
+      status: 'published',
+    });
 
     res.render('customer/pages/blog', {
       articles,
       categories,
-      currentPage: page,
-      totalPages: Math.ceil(total / limit),
+      currentPage,
+      totalPages,
       total,
-      currentCategory: category
+      currentCategory: category,
     });
   } catch (error) {
     res.render('customer/pages/blog', { error: 'Failed to load articles' });
   }
 };
-
