@@ -1,10 +1,10 @@
 const { body, validationResult } = require('express-validator');
-const DOMPurify = require('isomorphic-dompurify');
+const sanitizeHtmlLib = require('sanitize-html');
 
 // Sanitize HTML input
 const sanitizeHtml = (html) => {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
+  return sanitizeHtmlLib(html, {
+    allowedTags: [
       'p',
       'br',
       'strong',
@@ -21,14 +21,26 @@ const sanitizeHtml = (html) => {
       'li',
       'a',
     ],
-    ALLOWED_ATTR: ['href', 'target'],
+    allowedAttributes: {
+      a: ['href', 'target', 'rel'],
+    },
+    // Ensure target links are safe
+    transformTags: {
+      'a': (tagName, attribs) => {
+        const safe = Object.assign({}, attribs);
+        if (safe.target && safe.target !== '_self') {
+          safe.rel = 'noopener noreferrer';
+        }
+        return { tagName, attribs: safe };
+      }
+    }
   });
 };
 
 // Sanitize text input (remove HTML)
 const sanitizeText = (text) => {
   if (!text) return '';
-  return DOMPurify.sanitize(text, { ALLOWED_TAGS: [] });
+  return sanitizeHtmlLib(text, { allowedTags: [] });
 };
 
 // Validation middleware
