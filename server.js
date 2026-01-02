@@ -12,14 +12,8 @@ const { securityHeaders, apiLimiter } = require('./middleware/security');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// MongoDB URI for session store and local dev fallback
-const MONGODB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/tushar_electronics';
-if (!process.env.MONGODB_URI) {
-  console.warn(
-    'Warning: MONGODB_URI not set in environment; using local fallback.'
-  );
-}
+// NOTE: Do NOT provide fallbacks for secrets. `MONGODB_URI` and
+// `SESSION_SECRET` must be supplied via `process.env` (Vercel Environment Variables).
 
 // NOTE: Database connection + one-time initialization are handled in
 // `api/index.js` using a serverless-friendly cached connector (see `utils/db.js`).
@@ -43,23 +37,61 @@ app.use('/api', apiLimiter);
 app.use('/inquiry', require('./middleware/security').inquiryLimiter);
 app.use('/newsletter', require('./middleware/security').newsletterLimiter);
 
-// Session Configuration
-app.use(
-  session({
-    secret:
-      process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: MONGODB_URI,
-    }),
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // true if production (HTTPS), false otherwise
-    },
-  })
-);
+// Session setup is deferred to `initialize()` which is called after DB connect
+// to ensure the session store reuses the same MongoDB client (serverless-safe).
+
+let initialized = false;
+
+async function initialize() {
+  if (initialized) return;
+
+  // Require secrets from environment
+  if (!process.env.SESSION_SECRET) {
+    throw new Error('SESSION_SECRET environment variable is required');
+  }
+
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI environment variable is required');
+  }
+
+  // Attach session middleware using existing mongoose client to avoid
+  // creating multiple connections in serverless environments.
+  const client = mongoose.connection.getClient && mongoose.connection.getClient();
+  if (!client) {
+    throw new Error('Mongoose client not available. Ensure DB is connected before initialize()');
+  }
+
+  const store = MongoStore.create({ clientPromise: Promise.resolve(client) });
+
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      store,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+      },
+    })
+  );
+
+  // Attach routes after session middleware is configured
+  app.use('/api', require('./routes/api'));
+  app.use('/admin-tushar-ele-8429', require('./routes/admin'));
+  app.use('/admin', (req, res) => {
+    try {
+      res.status(404).render('customer/404');
+    } catch (err) {
+      res.status(404).send('404 - This page does not exist');
+    }
+  });
+
+  app.use('/', require('./routes/customer'));
+
+  initialized = true;
+}
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -157,7 +189,7 @@ app.get('/sitemap.xml', async (req, res) => {
   }
 });
 
-app.use('/', require('./routes/customer'));
+// NOTE: routes are attached during `initialize()` once DB + session are ready.
 
 // Favicon
 // Favicon - serve safely and log errors. Prefer static serving or placing a
@@ -243,3 +275,4 @@ app.use((err, req, res, next) => {
 // IMPORTANT FIX: No '0.0.0.0' — use normal localhost mode
 // Export app for serverless wrapper (api/index.js) or local use in tests.
 module.exports = app;
+module.exports.initialize = initialize;

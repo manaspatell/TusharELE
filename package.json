@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon dev-server.js",
+    "dev": "vercel dev",
     "seed": "node seed.js",
     "fix-images": "node utils/fixImagePaths.js"
   },

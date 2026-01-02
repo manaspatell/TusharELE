@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
-  console.warn('MONGODB_URI is not set. Set it in your environment.');
+  throw new Error('MONGODB_URI environment variable is required');
 }
 
 let cached = global.__mongoose;

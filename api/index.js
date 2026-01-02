@@ -8,6 +8,10 @@ let bootPromise = null;
 async function boot() {
   // Connect to DB once per cold start
   await db.connect();
+  // Initialize app (attach session store and routes) after DB is connected
+  if (app.initialize) {
+    await app.initialize();
+  }
   // Ensure initial data exists
   await ensureDefaultTestimonials();
 }
