@@ -65,6 +65,24 @@ app.use(
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Health endpoint for debugging (safe to remove after debugging)
+app.get('/_health', (req, res) => {
+  try {
+    const dbState = typeof mongoose !== 'undefined' ? mongoose.connection.readyState : -1;
+    return res.json({
+      ok: true,
+      env: {
+        mongodb: !!process.env.MONGODB_URI,
+        sessionSecret: !!process.env.SESSION_SECRET,
+      },
+      dbState,
+    });
+  } catch (err) {
+    console.error('Health check error:', err);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 // Routes
 app.use('/api', require('./routes/api'));
 // Change admin base path per request
