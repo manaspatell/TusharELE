@@ -142,8 +142,30 @@ app.get('/sitemap.xml', async (req, res) => {
 app.use('/', require('./routes/customer'));
 
 // Favicon
+// Favicon - serve safely and log errors. Prefer static serving or placing a
+// `favicon.ico` at `public/favicon.ico` for Vercel static handling.
 app.get('/favicon.ico', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'logo', 'Logo1.png'));
+  try {
+    const faviconPath = path.join(__dirname, 'public', 'logo', 'Logo1.png');
+    if (fs.existsSync(faviconPath)) {
+      return res.sendFile(faviconPath, (err) => {
+        if (err) {
+          console.error('Failed to send favicon:', err);
+          try {
+            res.status(500).end();
+          } catch (e) {
+            // ignore
+          }
+        }
+      });
+    }
+
+    console.warn('Favicon not found at', faviconPath);
+    return res.status(204).end();
+  } catch (err) {
+    console.error('Error in favicon handler:', err);
+    return res.status(500).end();
+  }
 });
 
 // 404 Handler
